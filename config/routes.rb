@@ -9,4 +9,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  get "dashboard", to: "pages#dashboard", as: :dashboard # setup dashboard
+  resources :months, only: [:new, :create]
+  resources :events, only: [:create]
 end
