@@ -5,6 +5,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard
+    @event = Event.new
+    @events = Event.all.order(created_at: :desc)
   end
-
 end
