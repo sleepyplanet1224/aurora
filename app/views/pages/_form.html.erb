@@ -1,0 +1,5 @@
+<%= simple_form_for :search, url: dashboard_path, method: :get do |f| %>
+  <%= f.input :start_date, as: :string, html5: true, input_html: { type: :month, name: "start_date", value: @start_date.strftime("%Y-%m") } %>
+  <%= f.input :end_date, as: :string, html5: true, input_html: { type: :month, name: "end_date", value: @end_date.strftime("%Y-%m") } %>
+  <%= f.submit %>
+<% end %>
