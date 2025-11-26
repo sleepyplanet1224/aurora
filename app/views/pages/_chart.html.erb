@@ -1,0 +1,19 @@
+<div class="container-sm mt-5">
+  <h2 class="text-center fw-bold fs-1 my-4" >Your financial projections over the next <%= @date_range.count %> months</h2>
+  <div class="text-center">
+    <button class="btn btn-secondary year-buttons mx-1">1 Year</button>
+    <button class="btn btn-secondary year-buttons mx-1">2 Years</button>
+    <button class="btn btn-secondary year-buttons mx-1">5 Years</button>
+    <button class="btn btn-secondary year-buttons mx-1">10 Years</button>
+  </div>
+  <div class="mt-5">
+    <%= area_chart @chart_data,
+      points: true,
+      library: {
+        title: "Total Assets (¥)",
+        curveType: "function",
+        legend: { position: "bottom" }
+      }
+    %>
+  </div>
+</div>
