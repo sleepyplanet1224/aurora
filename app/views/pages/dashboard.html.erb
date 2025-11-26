@@ -1,13 +1,14 @@
 <div>
+  <%= render 'pages/form' %>
+</div>
+
+<div>
   <!-- Button to open modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <button type="button" class="btn btn-primary btn btn-secondary year-buttons mx-1 my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
     + Create an event
   </button>
 </div>
 
-<div>
-  <%= render 'pages/form' %>
-</div>
 <div>
   <%= render 'pages/chart' %>
 </div>
@@ -24,16 +25,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <%= simple_form_for @event, url: events_path, html: { class: "modal-form" } do |f| %>
-          <%= f.input :name, label: "Event Name", input_html: { class: "form-control" } %>
-          <%= f.input :new_total_assets, label: "Total Assets", input_html: { class: "form-control" } %>
-          <%= f.input :new_saved_amount, label: "Saved Amount", input_html: { class: "form-control" } %>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <%= f.button :submit, "Submit", class: "btn btn-primary" %>
-          </div>
+        <%= simple_form_for :search, url: new_event_path, method: :get, data: { turbo_stream: true, turbo_action: "replace" } do |f| %>
+          <%= f.input :date, as: :string, html5: true, input_html: { type: :month, name: "month", onchange: "this.form.requestSubmit()" } %>
         <% end %>
+        <div id="event-form">
+        </div>
       </div>
     </div>
   </div>

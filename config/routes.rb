@@ -12,5 +12,5 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "pages#dashboard", as: :dashboard # setup dashboard
   resources :months, only: [:new, :create]
-  resources :events, only: [:create]
+  resources :events, only: [:new, :create]
 end

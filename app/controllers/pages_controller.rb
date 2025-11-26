@@ -35,7 +35,3 @@ class PagesController < ApplicationController
     end.to_h
   end
 end
-
-
-    # @event = Event.new
-    # @events = Event.all.order(created_at: :desc)
