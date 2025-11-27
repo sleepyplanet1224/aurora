@@ -31,7 +31,7 @@ class PagesController < ApplicationController
       base_asset += month.saved_amount
 
       # spit out hash for chart kick to process
-      [month.date.strftime("%b %Y"), base_asset]
+      [month.date.strftime("%b %Y"), month.total_assets + month.saved_amount]
     end.to_h
 
     # generate summary
