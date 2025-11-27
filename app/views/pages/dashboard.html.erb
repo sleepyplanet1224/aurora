@@ -1,9 +1,36 @@
 <div>
   <%= render 'pages/form' %>
 </div>
+
+<div>
+  <!-- Button to open modal -->
+  <button type="button" class="btn btn-primary btn btn-secondary year-buttons mx-1 my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    + Create an event
+  </button>
+</div>
+
 <div>
   <%= render 'pages/chart' %>
 </div>
 <div>
   <%= render 'pages/summary' %>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create an event</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for :search, url: new_event_path, method: :get, data: { turbo_stream: true, turbo_action: "replace" } do |f| %>
+          <%= f.input :date, as: :string, html5: true, input_html: { type: :month, name: "month", onchange: "this.form.requestSubmit()" } %>
+        <% end %>
+        <div id="event-form">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
