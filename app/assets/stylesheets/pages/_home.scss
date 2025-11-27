@@ -1,1 +1,18 @@
 // Specific CSS for your home-page
+.card {
+  /* Light shadow to make it float */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  /* Slightly rounded corners */
+  border-radius: 12px;
+  /* Remove default border */
+  border: none;
+  /* Give it a clean, white background */
+  background-color: white;
+}
+
+.card-title {
+  /* Define a nice primary color for the title text */
+  color: #007bff; /* Use your main brand color (e.g., Bootstrap blue) */
+  /* Remove bottom margin if Bootstrap's mb-4 is not enough */
+  padding-bottom: 10px;
+}
