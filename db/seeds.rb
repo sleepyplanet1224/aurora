@@ -18,6 +18,11 @@ Event.destroy_all
 puts "Creating users..."
 aurora = User.create!(email: "aurora@gmail.com", password: "123456", birthday: "1999-07-14")
 
+puts "Attaching user photos..."
+
+aurora_file = URI.parse("https://avatars.githubusercontent.com/u/236273565?v=4").open
+user.photo.attach(io: aurora_file, filename: "user.jpg", content_type: "image/jpg")
+
 # 3. Display a message 🎉
 puts "Created #{User.count} users."
 
