@@ -1,2 +1,65 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div
+  class="banner"
+  style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= image_url 'hero-aurora.jpg' %>');"
+>
+  <div class="container d-flex flex-column justify-content-center align-items-center">
+    <h1 class="fs-1 mb-3"><strong>“Simulate</strong> your life”</h1>
+
+    <h2 class="fw-semibold fs-2" style="color: #54D5A1;">
+      Own your financial destiny with Aurora Life Planner.
+    </h2>
+
+    <%= link_to "Start Now", dashboard_path, class:"btn btn-landing-page fs-4 mt-5" %>
+  </div>
+</div>
+
+<div class="container">
+  <div class="d-flex w-full py-3">
+    <p
+      class="mx-auto fs-1 mb-0"
+      style="font-family: 'Indie Flower', cursive;font-weight: 700;"
+    >
+      How it works
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="cards">
+    <div class="card-step">
+      <%= image_tag 'step1.png' %>
+
+      <div class="card-step-infos">
+        <div>
+          <h2>Input your financial information</h2>
+
+          <%# <p>Short description here!</p> %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-step">
+      <%= image_tag 'step2.png' %>
+
+      <div class="card-step-infos">
+        <div>
+          <h2>Run the simulation</h2>
+
+          <%# <p>Short description here!</p> %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-step">
+      <%= image_tag 'step3.png' %>
+
+      <div class="card-step-infos">
+        <div>
+          <h2>Get your results</h2>
+
+          <%# <p>Short description here!</p> %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
