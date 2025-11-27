@@ -1,5 +1,5 @@
 <div class="container-sm mt-5">
-  <h2 class="text-center fw-bold fs-1 my-4" >Your financial projections over the next <%= @date_range.count %> months</h2>
+  <h2 class="text-center fw-bold fs-1 my-4" >Your financial projections over the next <%= @months.count %> months</h2>
   <div class="text-center">
     <%= link_to "1 Year", dashboard_path(end_date: (@start_date + 1.year).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
     <%= link_to "2 Years", dashboard_path(end_date: (@start_date + 2.years).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
@@ -7,13 +7,53 @@
     <%= link_to "10 Years", dashboard_path(end_date: (@start_date + 10.years).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
   </div>
   <div class="mt-5">
-    <%= area_chart @chart_data,
-      points: true,
-      library: {
-        title: "Total Assets (¥)",
-        curveType: "function",
-        legend: { position: "bottom" }
+    <%= area_chart [
+      {
+        name: "Savings per Month",
+        data: @chart_data_saved,
+        color: "#2AFD8B",
+        points: true,
+        dataset: {
+          fill: true,
+          order: 1,
+          stack: "assets"
+        }
+      },
+      {
+        name: "Total Invested Assets",
+        data: @chart_data_other,
+        color: "#4A90E2",
+        points: true,
+        dataset: {
+          fill: true,
+          order: 1,
+          stack: "assets"
+        }
+      },
+      {
+        name: "Life Event",
+        data: @chart_data_event,
+        color: "#FF5C5C",
+        points: true,
+        dataset: {
+          showLine: false,        # dots only
+          fill: false,
+          pointRadius: 8,
+          pointHoverRadius: 10,
+          pointBorderWidth: 2,
+          order: 0,               # draw on top visually
+          stack: "markers"        # separate stack so it doesn't affect totals
+        }
       }
+    ],
+    title: "Total Assets (¥)",
+    legend: "bottom",
+    library: {
+      scales: {
+        xAxes: [{ stacked: true }],
+        yAxes: [{ stacked: true }]
+      }
+    }
     %>
   </div>
 </div>

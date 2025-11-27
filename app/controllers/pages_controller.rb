@@ -21,18 +21,37 @@ class PagesController < ApplicationController
     end
 
     # find months in the date range, order it
-    @date_range = current_user.months.where(date: @start_date..@end_date).order(:date)
-    # begin w/ assets of the first month in the projection range
-    base_asset = @date_range.first.total_assets
+    @months = current_user.months
+              .includes(:events)
+              .where(date: @start_date..@end_date)
+              .order(:date)
 
-    # iterate over each month inside projection range then accumulate
-    @chart_data = @date_range.map do |month|
-      # Add this month's saved amount to last month's base
-      base_asset += month.saved_amount
+    @chart_data_saved  = {} # stacked part 1
+    @chart_data_other  = {} # stacked part 2
+    @chart_data_event  = {} # event marker (total line)
 
-      # spit out hash for chart kick to process
-      [month.date.strftime("%b %Y"), month.total_assets + month.saved_amount]
-    end.to_h
+    @months.each do |month|
+      base_label  = month.date.strftime("%b %Y")
+      event_names = month.events.pluck(:name)
+
+      # Label includes event names if present (for tooltip/x-axis)
+      label =
+        if event_names.any?
+          "#{base_label} – #{event_names.join(', ')}"
+        else
+          base_label
+        end
+
+      saved = month.saved_amount.to_f
+      other = month.total_assets.to_f
+      total = saved + other
+
+      @chart_data_saved[label] = saved
+      @chart_data_other[label] = other
+
+      # Event marker plotted at the total height
+      @chart_data_event[label] = total if event_names.any?
+    end
 
     # generate summary
     # @summary = RubyLLM.chat.ask(" Please analyze the following monthly savings data.
