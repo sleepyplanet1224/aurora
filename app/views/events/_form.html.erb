@@ -5,7 +5,6 @@
   "marriage"         => "fa-solid fa-heart",
   "promotion"        => "fa-solid fa-briefcase"
 } %>
-
 <%= simple_form_for event, url: events_path, html: { class: "modal-form" } do |f| %>
   <div class="event-icon-picker">
     <% event_icons.each do |label, icon| %>
@@ -16,12 +15,11 @@
       </label>
     <% end %>
   </div>
-
   <%= f.input :new_total_assets, label: "Total Assets", input_html: { class: "form-control", value: month.total_assets } %>
   <%= f.input :new_saved_amount, label: "Saved Amount", input_html: { class: "form-control", value: month.saved_amount } %>
   <%= f.input :month_id, as: :hidden, input_html: { value: month.id } %>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    <%= f.button :submit, "Update Life Plan", class: "btn btn-primary" %>
+    <%= f.button :submit, "Update Life Plan", class: "btn btn-secondary year-buttons" %>
   </div>
 <% end %>
