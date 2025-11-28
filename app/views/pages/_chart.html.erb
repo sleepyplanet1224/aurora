@@ -23,18 +23,18 @@
     %>
     <%= link_to "10 Years",
         dashboard_path(end_date: date_10y, start_date: @start_date),
-        class: "btn mx-1 #{current_end_str == date_10y ? 'btn-dark' : 'btn-secondary'}" %>
+        class: "btn mx-1 #{current_end_str == date_10y ? 'btn-primary' : 'btn-secondary'}" %>
     <%= link_to "5 Years",
         dashboard_path(end_date: date_5y, start_date: @start_date),
-        class: "btn mx-1 #{current_end_str == date_5y ? 'btn-dark' : 'btn-secondary'}" %>
+        class: "btn mx-1 #{current_end_str == date_5y ? 'btn-primary' : 'btn-secondary'}" %>
     <%= link_to "3 Years",
         dashboard_path(end_date: date_3y, start_date: @start_date),
-        class: "btn mx-1 #{current_end_str == date_3y ? 'btn-dark' : 'btn-secondary'}" %>
+        class: "btn mx-1 #{current_end_str == date_3y ? 'btn-primary' : 'btn-secondary'}" %>
     <%= link_to "1 Year",
         dashboard_path(end_date: date_1y, start_date: @start_date),
-        class: "btn mx-1 #{current_end_str == date_1y ? 'btn-dark' : 'btn-secondary'}" %>
+        class: "btn mx-1 #{current_end_str == date_1y ? 'btn-primary' : 'btn-secondary'}" %>
     <button type="button"
-            class="btn mx-1 <%= is_custom_active ? 'btn-dark' : 'btn-secondary' %>"
+            class="btn mx-1 <%= is_custom_active ? 'btn-primary' : 'btn-secondary' %>"
             data-bs-toggle="modal"
             data-bs-target="#customDateModal">
       Custom
