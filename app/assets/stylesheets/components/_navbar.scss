@@ -1,7 +1,11 @@
 .navbar-lewagon {
   justify-content: space-between;
   background: white;
-  padding: 0.5rem 1rem; /* add some vertical padding */
+  padding: 0.5rem 1rem;
+
+  position: sticky;
+  top: 0;
+  z-index: 1030;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -10,22 +14,13 @@
 
 .navbar-lewagon .navbar-brand img,
 .navbar-logo {
-  height: 60px;      /* larger logo */
-  width: auto;       /* keep aspect ratio */
-  object-fit: contain; /* prevents stretching */
-
+  height: 60px;
+  width: auto;
+  object-fit: contain;
 }
 
 .avatar:hover {
   opacity: 0.8;
   transition: 0.2s;
   cursor: pointer;
-}
-
-.navbar-lewagon {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1030;
 }
