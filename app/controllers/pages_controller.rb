@@ -5,6 +5,8 @@ class PagesController < ApplicationController
   end
 
   def dashboard
+    redirect_to new_month_path if current_user.months.empty?
+
     # choose start and end dates for the graph to display
     # TODO: Remember to make this part dynamic depending on what the user chooses
     if params[:start_date].present?
@@ -22,9 +24,9 @@ class PagesController < ApplicationController
 
     # find months in the date range, order it
     @months = current_user.months
-              .includes(:events)
-              .where(date: @start_date..@end_date)
-              .order(:date)
+                          .includes(:events)
+                          .where(date: @start_date..@end_date)
+                          .order(:date)
 
     @chart_data_saved  = {} # stacked part 1
     @chart_data_other  = {} # stacked part 2
@@ -56,14 +58,14 @@ class PagesController < ApplicationController
     # generate summary
     if ENV["ENABLE_SUMMARY"] == "true"
       @summary = RubyLLM.chat.ask(" Please analyze the following monthly savings data.
-        I would like you to:
-        Identify the overall trend (e.g., increasing, decreasing, or fluctuating)
-        Point out any major spikes or drops
-        Highlight any seasonal or cyclical patterns
-        Analyze the changes in recent years (especially the last 2–3 years)
-        Summarize any notable observations or anomalies and Limit it to 5 lines.
-        Treat the data as if you were looking at a line chart—describe the behavior over time, even if no chart is provided.
-        The data is #{@chart_data}").content
+            I would like you to:
+            Identify the overall trend (e.g., increasing, decreasing, or fluctuating)
+            Point out any major spikes or drops
+            Highlight any seasonal or cyclical patterns
+            Analyze the changes in recent years (especially the last 2–3 years)
+            Summarize any notable observations or anomalies and Limit it to 5 lines.
+            Treat the data as if you were looking at a line chart—describe the behavior over time, even if no chart is provided.
+            The data is #{@chart_data}").content
     end
   end
 end

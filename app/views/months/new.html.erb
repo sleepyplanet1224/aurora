@@ -18,11 +18,15 @@
 
     <%= f.input :date, as: :hidden, input_html: { value: Date.today.beginning_of_month, class: "form-control" } %>
 
+    <%= f.input :interest_rate, collection: Month::RATES.to_a, label_method: :first, value_method: :second, include_blank: false, selected: Month::RATES.to_a[-3] %>
+
     <%= f.button :submit, "Run Projection", class: "btn btn-primary w-100 mt-4" %>
+
   <% end %>
   <% if defined?(@total) && @total.present? %>
     <div class="alert alert-success mt-4 text-center">
-      <strong>Projected Total:</strong> <%= number_to_currency(@total) %>
+      <strong>Projected Total:</strong>
+      <%= number_to_currency(@total) %>
     </div>
   <% end %>
 </div>

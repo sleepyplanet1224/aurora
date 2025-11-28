@@ -16,13 +16,14 @@ class MonthsController < ApplicationController
       saved_amount = @month.saved_amount
 
       while current <= end_month
-        total_assets += saved_amount
         current_user.months.find_or_create_by!(
           date: current,
           user: current_user,
           total_assets: total_assets,
           saved_amount: saved_amount
         )
+        total_assets += saved_amount
+        total_assets *= @month.interest_rate
         current = current.next_month
       end
       redirect_to dashboard_path, notice: "Month and 30 years of months created!"
@@ -34,6 +35,6 @@ class MonthsController < ApplicationController
   private
 
   def month_params
-    params.require(:month).permit(:total_assets, :saved_amount, :date)
+    params.require(:month).permit(:total_assets, :saved_amount, :date, :interest_rate)
   end
 end
