@@ -1,22 +1,13 @@
 <div>
   <%= render 'pages/form' %>
 </div>
-
-<div>
-  <!-- Button to open modal -->
-  <button type="button" class="btn btn-primary btn btn-secondary year-buttons mx-1 my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    + Plan a Life event
-  </button>
-</div>
-
 <div>
   <%= render 'pages/chart' %>
 </div>
 <div>
   <%= render 'pages/summary' %>
 </div>
-
-<!-- Modal -->
+<!-- Plan a Life Event Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -30,6 +21,40 @@
         <% end %>
         <div id="event-form">
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Custom Date Modal on Top of Graph -->
+<div class="modal fade" id="customDateModal" tabindex="-1" aria-labelledby="customDateModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="customDateModalLabel">Select Your Financial Projection Range</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for :search, url: dashboard_path, method: :get do |f| %>
+          <div class="row g-3 align-items-end justify-content-center">
+            <div class="col-6">
+              <%= f.input :start_date,
+                          label: "Start Date",
+                          as: :string,
+                          html5: true,
+                          input_html: { type: :month, name: "start_date", value: @start_date.strftime("%Y-%m") } %>
+            </div>
+            <div class="col-6">
+              <%= f.input :end_date,
+                          label: "End Date",
+                          as: :string,
+                          html5: true,
+                          input_html: { type: :month, name: "end_date", value: @end_date.strftime("%Y-%m") } %>
+            </div>
+            <div class="col-12 mt-4 text-center">
+              <%= f.submit 'See my projection', class: "btn btn-secondary year-buttons w-100" %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
