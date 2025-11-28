@@ -9,10 +9,10 @@
   </h2>
   <div class="text-center">
     <p class="text-secondary">Shortcuts from today:</p>
-    <%= link_to "1 Year", dashboard_path(end_date: (@start_date + 1.year - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
-    <%= link_to "2 Years", dashboard_path(end_date: (@start_date + 2.years - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
-    <%= link_to "5 Years", dashboard_path(end_date: (@start_date + 5.years - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
     <%= link_to "10 Years", dashboard_path(end_date: (@start_date + 10.years - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
+    <%= link_to "5 Years", dashboard_path(end_date: (@start_date + 5.years - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
+    <%= link_to "3 Years", dashboard_path(end_date: (@start_date + 3.years - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
+    <%= link_to "1 Year", dashboard_path(end_date: (@start_date + 1.year - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
   </div>
   <div class="mt-5">
     <%= area_chart [
