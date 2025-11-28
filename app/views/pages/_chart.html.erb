@@ -1,10 +1,18 @@
 <div class="container-sm mt-5">
-  <h2 class="text-center fw-bold fs-1 my-4" >Your financial projections over the next <%= @months.count %> months</h2>
+  <h2 class="text-center fw-bold fs-1 my-4">
+    Your financial projections over the next
+    <% years, months = @months.count.divmod(12) %>
+    <% date_parts = [] %>
+    <% date_parts << pluralize(years, 'year') if years > 0 %>
+    <% date_parts << pluralize(months, 'month') if months > 0 %>
+    <%= date_parts.join(' and ') %>
+  </h2>
   <div class="text-center">
-    <%= link_to "1 Year", dashboard_path(end_date: (@start_date + 1.year).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
-    <%= link_to "2 Years", dashboard_path(end_date: (@start_date + 2.years).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
-    <%= link_to "5 Years", dashboard_path(end_date: (@start_date + 5.years).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
-    <%= link_to "10 Years", dashboard_path(end_date: (@start_date + 10.years).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
+    <p>Shortcuts from today:</p>
+    <%= link_to "1 Year", dashboard_path(end_date: (@start_date + 1.year - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
+    <%= link_to "2 Years", dashboard_path(end_date: (@start_date + 2.years - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
+    <%= link_to "5 Years", dashboard_path(end_date: (@start_date + 5.years - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
+    <%= link_to "10 Years", dashboard_path(end_date: (@start_date + 10.years - 1.month).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
   </div>
   <div class="mt-5">
     <%= area_chart [
