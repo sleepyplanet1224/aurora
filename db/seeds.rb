@@ -36,13 +36,15 @@ total_assets = 100_000
 saved_amount = 10_000
 
 while current <= end_month
-  total_assets += saved_amount
   Month.find_or_create_by!(
     date: current,
     user: aurora,
     total_assets: total_assets,
     saved_amount: saved_amount
   )
+
+  total_assets += saved_amount
+
   current = current.next_month
 end
 

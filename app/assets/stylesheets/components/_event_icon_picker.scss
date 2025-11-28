@@ -1,0 +1,40 @@
+.event-icon-picker {
+  display: flex;
+  gap: 1rem;
+}
+
+.event-icon-box {
+  border: 2px solid #ccc;
+  padding: 1rem;
+  width: 120px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.event-icon-box:hover {
+  background: #a4c2ef !important
+}
+
+.event-icon-box i {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* hide the actual radio input */
+.event-radio {
+  display: none;
+}
+
+/* Selected state: highlight whole box */
+.event-radio:checked + i,
+.event-radio:checked + i + span {
+  color: #0d6efd;
+}
+
+.event-icon-box:has(.event-radio:checked) {
+  border-color: #0d6efd;
+  background: #e9f2ff;
+}

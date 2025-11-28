@@ -1,5 +1,20 @@
+<% event_icons = {
+  "birth of a child" => "fa-solid fa-baby",
+  "marriage"         => "fa-solid fa-heart",
+  "promotion"        => "fa-solid fa-briefcase"
+} %>
+
 <%= simple_form_for event, url: events_path, html: { class: "modal-form" } do |f| %>
-  <%= f.input :name, label: "Event Name", collection: Event::NAMES, input_html: { class: "form-control" } %>
+  <div class="event-icon-picker">
+    <% event_icons.each do |label, icon| %>
+      <label class="event-icon-box">
+        <%= f.radio_button :name, label, class: "event-radio" %>
+        <i class="<%= icon %>"></i>
+        <span><%= label.humanize %></span>
+      </label>
+    <% end %>
+  </div>
+
   <%= f.input :new_total_assets, label: "Total Assets", input_html: { class: "form-control", value: month.total_assets } %>
   <%= f.input :new_saved_amount, label: "Saved Amount", input_html: { class: "form-control", value: month.saved_amount } %>
   <%= f.input :month_id, as: :hidden, input_html: { value: month.id } %>
