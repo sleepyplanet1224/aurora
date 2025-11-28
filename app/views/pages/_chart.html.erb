@@ -1,10 +1,51 @@
 <div class="container-sm mt-5">
-  <h2 class="text-center fw-bold fs-1 my-4" >Your financial projections over the next <%= @months.count %> months</h2>
+  <h1 class="text-center fw-bold fs-1 my-4">
+    Your financial projections over the next
+    <% years, months = @months.count.divmod(12) %>
+    <% date_parts = [] %>
+    <% date_parts << pluralize(years, 'year') if years > 0 %>
+    <% date_parts << pluralize(months, 'month') if months > 0 %>
+    <%= date_parts.join(' and ') %>
+  </h2>
   <div class="text-center">
-    <%= link_to "1 Year", dashboard_path(end_date: (@start_date + 1.year).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
-    <%= link_to "2 Years", dashboard_path(end_date: (@start_date + 2.years).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
-    <%= link_to "5 Years", dashboard_path(end_date: (@start_date + 5.years).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
-    <%= link_to "10 Years", dashboard_path(end_date: (@start_date + 10.years).strftime("%Y-%m"), start_date: @start_date), class: "btn btn-secondary year-buttons mx-1" %>
+    <%
+      # 1. Capture the current end date string for comparison
+      current_end_str = @end_date.strftime("%Y-%m")
+
+      # 2. Pre-calculate the target dates for each button
+      date_10y = (@start_date + 10.years - 1.month).strftime("%Y-%m")
+      date_5y  = (@start_date + 5.years - 1.month).strftime("%Y-%m")
+      date_3y  = (@start_date + 3.years - 1.month).strftime("%Y-%m")
+      date_1y  = (@start_date + 1.year - 1.month).strftime("%Y-%m")
+
+      # 3. Check if Custom is active (Active if NONE of the standard buttons match)
+      is_custom_active = ![date_10y, date_5y, date_3y, date_1y].include?(current_end_str)
+    %>
+    <%= link_to "10 Years",
+        dashboard_path(end_date: date_10y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_10y ? 'btn-dark' : 'btn-secondary'}" %>
+    <%= link_to "5 Years",
+        dashboard_path(end_date: date_5y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_5y ? 'btn-dark' : 'btn-secondary'}" %>
+    <%= link_to "3 Years",
+        dashboard_path(end_date: date_3y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_3y ? 'btn-dark' : 'btn-secondary'}" %>
+    <%= link_to "1 Year",
+        dashboard_path(end_date: date_1y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_1y ? 'btn-dark' : 'btn-secondary'}" %>
+    <button type="button"
+            class="btn mx-1 <%= is_custom_active ? 'btn-dark' : 'btn-secondary' %>"
+            data-bs-toggle="modal"
+            data-bs-target="#customDateModal">
+      Custom
+    </button>
+  </div>
+  <div class="container-sm mt-5">
+    <div class="d-flex justify-content-center align-items-center">
+      <div>
+        <!-- Button to open modal -->
+      </div>
+    </div>
   </div>
   <div class="mt-5">
     <%= area_chart [
