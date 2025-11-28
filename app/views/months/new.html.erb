@@ -1,13 +1,27 @@
+<h1> ok ok dude!</h1>
+<br>
+<br>
+<br>
+<div>
+
 <h1 class="text-center mb-4 card-title">
-  <strong>Let's start with your numbers</strong>
+  <strong>Build your future, one life event at a time</strong>
 </h1>
 <div class="card mx-auto p-4" style="max-width: 400px;">
   <%= simple_form_for @month do |f| %>
-    <%= f.input :total_assets, label: "Total Assets", input_html: { step: 0.01, class: "form-control" }, placeholder: "" %>
-    <%= f.input :saved_amount, label: "Saved Amount", input_html: { step: 0.01, class: "form-control" }, placeholder: "" %>
+
+    <label><strong>1st add total Assets</strong></label>
+    <%= f.input :total_assets, label: "", input_html: { step: 0.01, class: "form-control" }, placeholder: "" %>
+
+    <label><strong>2nd add saved amount</strong></label>
+    <%= f.input :saved_amount, label: "", input_html: { step: 0.01, class: "form-control" }, placeholder: "" %>
+
     <%= f.input :date, as: :hidden, input_html: { value: Date.today.beginning_of_month, class: "form-control" } %>
+
     <%= f.input :interest_rate, collection: Month::RATES.to_a, label_method: :first, value_method: :second, include_blank: false, selected: Month::RATES.to_a[-3] %>
-    <%= f.button :submit, "Calculate Funds", class: "btn btn-primary w-100 mt-4" %>
+
+    <%= f.button :submit, "Run Projection", class: "btn btn-primary w-100 mt-4" %>
+
   <% end %>
   <% if defined?(@total) && @total.present? %>
     <div class="alert alert-success mt-4 text-center">
