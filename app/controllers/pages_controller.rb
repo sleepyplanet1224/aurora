@@ -17,7 +17,7 @@ class PagesController < ApplicationController
     if params[:end_date].present?
       @end_date = Date.parse(params[:end_date] + "-01").beginning_of_month
     else
-      @end_date = @start_date + 119.months # default
+      @end_date = @start_date + 35.months # default
     end
 
     # find months in the date range, order it
