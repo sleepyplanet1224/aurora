@@ -1,0 +1,33 @@
+.aurora-footer {
+  background: #F9FAFB;
+  background: #F9FAFB;
+  border-top: 1px solid #E5E7EB;
+  padding: 14px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #2A3A45;
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.aurora-footer a {
+  color: #2A3A45;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.aurora-footer a:hover {
+  color: #3CCFCF; /* aurora accent */
+}
+
+.footer-separator {
+  color: #D1D5DB;
+}
+
+.footer-copy {
+  color: #6B7280;
+}

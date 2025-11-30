@@ -1,18 +1,32 @@
-// Specific CSS for your home-page
-.card {
-  /* Light shadow to make it float */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  /* Slightly rounded corners */
-  border-radius: 12px;
-  /* Remove default border */
-  border: none;
-  /* Give it a clean, white background */
-  background-color: white;
+.hero-aurora {
+  background: var(--aurora-bg);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
 }
 
-.card-title {
-  /* Define a nice primary color for the title text */
-  color: #007bff; /* Use your main brand color (e.g., Bootstrap blue) */
-  /* Remove bottom margin if Bootstrap's mb-4 is not enough */
-  padding-bottom: 10px;
+.projection-chart-placeholder {
+  height: 220px;
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(43, 182, 169, 0.35),
+    rgba(122, 92, 255, 0.12)
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* add a fake line using a pseudo-element for now */
+.projection-chart-placeholder::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  bottom: 18%;
+  width: 80%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--aurora-teal), var(--aurora-indigo));
+  transform-origin: left center;
+  transform: skewY(-10deg);
 }

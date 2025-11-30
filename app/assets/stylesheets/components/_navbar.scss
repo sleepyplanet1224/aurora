@@ -2,25 +2,15 @@
   justify-content: space-between;
   background: white;
   padding: 0.5rem 1rem;
-
   position: sticky;
-  top: 0;
-  z-index: 1030;
+  top: 0; // required for sticky so it knows where to start
+  z-index: 1030; // required for sticky so it stays above other content
 }
 
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
 }
 
-.navbar-lewagon .navbar-brand img,
-.navbar-logo {
-  height: 60px;
-  width: auto;
-  object-fit: contain;
-}
-
-.avatar:hover {
-  opacity: 0.8;
-  transition: 0.2s;
-  cursor: pointer;
+.navbar-lewagon .navbar-brand img {
+  height: 48px;
 }

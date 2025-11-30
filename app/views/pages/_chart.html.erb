@@ -1,4 +1,4 @@
-<div class="container-sm mt-5">
+<div class="container-sm mt-5 card-aurora">
   <h1 class="text-center fw-bold fs-1 my-4">
     Your financial projections over the next
     <% years, months = @months.count.divmod(12) %>
@@ -52,7 +52,7 @@
       {
         name: "Savings per Month",
         data: @chart_data_saved,
-        color: "#2AFD8B",
+        color: "#2BB6A9",
         points: true,
         dataset: {
           fill: true,
@@ -63,11 +63,11 @@
       {
         name: "Total Invested Assets",
         data: @chart_data_other,
-        color: "#4A90E2",
+        color: "#7A5CFF",
         points: true,
         dataset: {
           fill: true,
-          order: 1,
+          order: 2,
           stack: "assets"
         }
       },
@@ -91,8 +91,8 @@
     legend: "bottom",
     library: {
       scales: {
-        xAxes: [{ stacked: true }],
-        yAxes: [{ stacked: true }]
+        x: { stacked: true },
+        y: { stacked: true }
       }
     }
     %>
