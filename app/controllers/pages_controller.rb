@@ -7,6 +7,8 @@ class PagesController < ApplicationController
   def dashboard
     redirect_to new_month_path if current_user.months.empty?
 
+    @event = Event.new
+
     # choose start and end dates for the graph to display
     # TODO: Remember to make this part dynamic depending on what the user chooses
     if params[:start_date].present?

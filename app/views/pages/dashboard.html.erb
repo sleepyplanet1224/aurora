@@ -7,6 +7,15 @@
 <div>
   <%= render 'pages/summary' %>
 </div>
+
+<% event_icons = {
+  "birth of a child" => "fa-solid fa-baby",
+  "buying a car"     => "fa-solid fa-car-side",
+  "inheritance"      => "fa-solid fa-money-bill-transfer",
+  "marriage"         => "fa-solid fa-heart",
+  "promotion"        => "fa-solid fa-briefcase"
+} %>
+
 <!-- Plan a Life Event Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -15,8 +24,22 @@
         <h5 class="modal-title" id="exampleModalLabel">Plan a Life Event</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
+
       <div class="modal-body">
         <%= simple_form_for :search, url: new_event_path, method: :get, data: { turbo_stream: true, turbo_action: "replace" } do |f| %>
+
+          <div class="event-icon-picker">
+            <% event_icons.each do |label, icon| %>
+              <label class="event-icon-box">
+                <%= f.radio_button :name, label, class: "event-radio" %>
+                <i class="<%= icon %>"></i>
+                <span><%= label.humanize %></span>
+              </label>
+            <% end %>
+          </div>
+
+
           <%= f.input :date, as: :string, html5: true, input_html: { type: :month, name: "month", onchange: "this.form.requestSubmit()" } %>
         <% end %>
         <div id="event-form">
@@ -25,6 +48,7 @@
     </div>
   </div>
 </div>
+
 <!-- Custom Date Modal on Top of Graph -->
 <div class="modal fade" id="customDateModal" tabindex="-1" aria-labelledby="customDateModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
