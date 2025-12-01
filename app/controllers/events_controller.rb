@@ -9,11 +9,20 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
 
-    if params[:event][:percentage].present?
-      percentage = params[:event][:percentage].to_f
-      multiplier = 1 + (percentage / 100.0)
-
-      @event.new_saved_amount = @event.new_saved_amount.to_f * multiplier
+    case @event.name
+    when "promotion"
+      if params[:event][:percentage].present?
+        percentage = params[:event][:percentage].to_f
+        multiplier = 1 + (percentage / 100.0)
+        @event.new_saved_amount = @event.new_saved_amount.to_f * multiplier
+      end
+    when "marriage"
+      if params[:event][:spouse_total_assets].present?
+        spouse_total_assets = params[:event][:spouse_total_assets].to_f
+        spouse_saved_amount = params[:event][:spouse_saved_amount].to_f
+        @event.new_total_assets = @event.new_total_assets.to_f + spouse_total_assets
+        @event.new_saved_amount = @event.new_saved_amount.to_f + spouse_saved_amount
+      end
     end
 
     if @event.save
