@@ -55,8 +55,7 @@ class PagesController < ApplicationController
       @chart_data_event[label] = total if event_names.any?
     end
 
-    # generate summary
-    # if ENV["ENABLE_SUMMARY"] == "true"
+    if ENV["ENABLE_SUMMARY"] == "true"
       @summary = RubyLLM.chat.ask(" Please analyze the following monthly savings data.
             I would like you to:
             Identify the overall trend (e.g., increasing, decreasing, or fluctuating)
@@ -66,6 +65,6 @@ class PagesController < ApplicationController
             Summarize any notable observations or anomalies and Limit it to 5 lines.
             Treat the data as if you were looking at a stacked area chart—describe the behavior over time, even if no chart is provided.
             The data is #{@chart_data_other}").content
-    # end
+    end
   end
 end

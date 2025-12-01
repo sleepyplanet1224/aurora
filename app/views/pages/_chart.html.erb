@@ -1,4 +1,4 @@
-<div class="container-sm mt-5">
+<div class="container-sm mt-5 card-aurora">
   <h1 class="text-center fw-bold fs-1 my-4">
     Your financial projections over the next
     <% years, months = @months.count.divmod(12) %>
@@ -23,18 +23,18 @@
     %>
     <%= link_to "10 Years",
         dashboard_path(end_date: date_10y, start_date: @start_date),
-        class: "btn mx-1 #{current_end_str == date_10y ? 'btn-primary' : 'btn-secondary'}" %>
+        class: "btn mx-1 #{current_end_str == date_10y ? 'btn-aurora-primary' : 'btn-secondary'}" %>
     <%= link_to "5 Years",
         dashboard_path(end_date: date_5y, start_date: @start_date),
-        class: "btn mx-1 #{current_end_str == date_5y ? 'btn-primary' : 'btn-secondary'}" %>
+        class: "btn mx-1 #{current_end_str == date_5y ? 'btn-aurora-primary' : 'btn-secondary'}" %>
     <%= link_to "3 Years",
         dashboard_path(end_date: date_3y, start_date: @start_date),
-        class: "btn mx-1 #{current_end_str == date_3y ? 'btn-primary' : 'btn-secondary'}" %>
+        class: "btn mx-1 #{current_end_str == date_3y ? 'btn-aurora-primary' : 'btn-secondary'}" %>
     <%= link_to "1 Year",
         dashboard_path(end_date: date_1y, start_date: @start_date),
-        class: "btn mx-1 #{current_end_str == date_1y ? 'btn-primary' : 'btn-secondary'}" %>
+        class: "btn mx-1 #{current_end_str == date_1y ? 'btn-aurora-primary' : 'btn-secondary'}" %>
     <button type="button"
-            class="btn mx-1 <%= is_custom_active ? 'btn-primary' : 'btn-secondary' %>"
+            class="btn mx-1 <%= is_custom_active ? 'btn-aurora-primary' : 'btn-secondary' %>"
             data-bs-toggle="modal"
             data-bs-target="#customDateModal">
       Custom
@@ -48,53 +48,46 @@
     </div>
   </div>
   <div class="mt-5">
-    <%= area_chart [
+    <%= line_chart [
       {
         name: "Savings per Month",
         data: @chart_data_saved,
-        color: "#2AFD8B",
-        points: true,
         dataset: {
-          fill: true,
-          order: 1,
-          stack: "assets"
+          fill: "origin",
+          backgroundColor: "rgba(43, 182, 169, 0.5)",
+          borderColor: "rgba(43, 182, 169, 1)",
+          order: 1
         }
       },
       {
         name: "Total Invested Assets",
         data: @chart_data_other,
-        color: "#4A90E2",
-        points: true,
         dataset: {
-          fill: true,
-          order: 1,
-          stack: "assets"
+          fill: "-1",
+          backgroundColor: "rgba(122, 92, 255, 0.5)",
+          borderColor: "rgba(122, 92, 255, 1)",
+          order: 2
         }
       },
       {
         name: "Life Event",
         data: @chart_data_event,
-        color: "#FF5C5C",
-        points: true,
         dataset: {
-          showLine: false,        # dots only
+          showLine: false,
           fill: false,
           pointRadius: 8,
           pointHoverRadius: 10,
           pointBorderWidth: 2,
-          order: 0,               # draw on top visually
-          stack: "markers"        # separate stack so it doesn't affect totals
+          pointBackgroundColor: "#FF5C5C",
+          pointBorderColor: "#FF5C5C",
+          order: 0
         }
       }
     ],
-    title: "Total Assets (¥)",
-    legend: "bottom",
-    library: {
-      scales: {
-        xAxes: [{ stacked: true }],
-        yAxes: [{ stacked: true }]
-      }
-    }
+      title: "Total Assets (¥)",
+      legend: "bottom",
+      stacked: true,
+      colors: ["#2BB6A9", "#7A5CFF", "#FF5C5C"]
     %>
   </div>
 </div>
