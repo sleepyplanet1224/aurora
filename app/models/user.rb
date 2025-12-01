@@ -5,5 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :months, dependent: :destroy
+  has_many :events, through: :months, dependent: :destroy
   # validates :birthday, presence: true
 end
