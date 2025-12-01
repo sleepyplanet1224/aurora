@@ -13,7 +13,7 @@ class EventsController < ApplicationController
       percentage = params[:event][:percentage].to_f
       multiplier = 1 + (percentage / 100.0)
 
-      @event.new_total_assets = @event.new_total_assets.to_f * multiplier
+      # @event.new_total_assets = @event.new_total_assets.to_f * multiplier
       @event.new_saved_amount = @event.new_saved_amount.to_f * multiplier
     end
 
@@ -38,6 +38,6 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:name, :new_total_assets, :new_saved_amount, :month_id, :percentage)
+    params.require(:event).permit(:name, :new_total_assets, :new_saved_amount, :month_id)
   end
 end

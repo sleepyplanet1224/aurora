@@ -2,6 +2,7 @@
   <%= f.input :new_total_assets, label: "Total Assets", input_html: { class: "form-control", value: month.total_assets } %>
   <%= f.input :new_saved_amount, label: "Saved Amount", input_html: { class: "form-control", value: month.saved_amount } %>
   <%= f.input :month_id, as: :hidden, input_html: { value: month.id } %>
+  <%= f.input :name, as: :hidden, input_html: { value: params[:search][:name] } %>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <%= f.button :submit, "Update Life Plan", class: "btn btn-primary" %>

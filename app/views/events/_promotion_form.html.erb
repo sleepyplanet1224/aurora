@@ -1,9 +1,13 @@
 <%= simple_form_for event, url: events_path, html: { class: "modal-form" } do |f| %>
 
-  <%= f.input :percentage,
+  <%#= f.input :percentage,
               label: "Raise Percentage (%)",
               as: :number,
               input_html: { value: 10, min: 0, step: 1 } %>
+  <%#= number_field :percentage, value: 10 %>
+  <%#= number_field_tag :amount, 10, min: 0, max: 100 %>
+  <%= f.label :percentage, "Raise Percentage (%)" %>
+  <%= f.input_field :percentage, name: "event[percentage]", class: "form-control", value: 10, min: 0, max: 100 %>
 
   <%= f.input :new_total_assets, as: :hidden, input_html: { value: month.total_assets } %>
   <%= f.input :new_saved_amount, as: :hidden, input_html: { value: month.saved_amount } %>
