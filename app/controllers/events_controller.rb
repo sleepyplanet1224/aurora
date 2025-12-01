@@ -3,6 +3,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @month = current_user.months.find_by(date: params[:month] + "-01")
+    @event_name = params[:search][:name]&.strip
   end
 
   def create
