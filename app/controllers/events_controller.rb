@@ -3,11 +3,19 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @month = current_user.months.find_by(date: params[:month] + "-01")
-    @event_name = params[:search][:name]&.strip
+    @event_name = params.dig(:search, :name)&.strip
   end
 
   def create
     @event = Event.new(event_params)
+
+    if params[:event][:percentage].present?
+      percentage = params[:event][:percentage].to_f
+      multiplier = 1 + (percentage / 100.0)
+
+      @event.new_total_assets = @event.new_total_assets.to_f * multiplier
+      @event.new_saved_amount = @event.new_saved_amount.to_f * multiplier
+    end
 
     if @event.save
       total_assets = @event.new_total_assets
@@ -30,6 +38,6 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:name, :new_total_assets, :new_saved_amount, :month_id)
+    params.require(:event).permit(:name, :new_total_assets, :new_saved_amount, :month_id, :percentage)
   end
 end
