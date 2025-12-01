@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-
   def new
     @event = Event.new
     @month = current_user.months.find_by(date: params[:month] + "-01")
@@ -19,6 +18,7 @@ class EventsController < ApplicationController
           saved_amount: saved_amount
         )
         total_assets += saved_amount
+        total_assets *= month.interest_rate
       end
       redirect_to dashboard_path, notice: "Event created successfully."
     else
