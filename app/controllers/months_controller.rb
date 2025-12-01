@@ -14,16 +14,18 @@ class MonthsController < ApplicationController
       current = start_month
       total_assets = @month.total_assets
       saved_amount = @month.saved_amount
+      interest_rate = @month.interest_rate
 
       while current <= end_month
         current_user.months.find_or_create_by!(
           date: current,
           user: current_user,
           total_assets: total_assets,
-          saved_amount: saved_amount
+          saved_amount: saved_amount,
+          interest_rate: interest_rate
         )
         total_assets += saved_amount
-        total_assets *= @month.interest_rate
+        total_assets *= interest_rate
         current = current.next_month
       end
       redirect_to dashboard_path, notice: "Month and 30 years of months created!"
