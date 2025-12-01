@@ -2,10 +2,8 @@
 
   <%= f.label :spouse_total_assets, "Spouse's Total Assets" %>
   <%= f.input_field :spouse_total_assets, name: "event[spouse_total_assets]", class: "form-control", value: 0 %>
-
   <%= f.label :spouse_saved_amount, "Spouse's Monthly Income" %>
   <%= f.input_field :spouse_saved_amount, name: "event[spouse_saved_amount]", class: "form-control", value: 0 %>
-
 
   <%= f.input :new_total_assets, as: :hidden, input_html: { value: month.total_assets } %>
   <%= f.input :new_saved_amount, as: :hidden, input_html: { value: month.saved_amount } %>
