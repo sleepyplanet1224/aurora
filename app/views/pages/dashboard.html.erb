@@ -25,7 +25,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-
       <div class="modal-body">
         <%= simple_form_for :search, url: new_event_path, method: :get, data: { turbo_stream: true, turbo_action: "replace" } do |f| %>
 
@@ -38,7 +37,6 @@
               </label>
             <% end %>
           </div>
-
 
           <%= f.input :date, as: :string, html5: true, input_html: { type: :month, name: "month", onchange: "this.form.requestSubmit()" } %>
         <% end %>
