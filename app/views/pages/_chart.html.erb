@@ -97,7 +97,14 @@
       legend: "bottom",
       stacked: true,
       colors: ["#2BB6A9", "#7A5CFF", "#FF5C5C"],
-      height: "392px"
+      height: "360px",
+      library: {
+        scales: {
+          y: {
+            ticks: { maxTicksLimit: 10 }
+          }
+        }
+      }
     %>
   </div>
 </div>

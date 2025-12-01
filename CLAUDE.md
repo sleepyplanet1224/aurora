@@ -30,7 +30,7 @@ bin/rails routes          # List all routes
 - **Authentication**: Devise
 - **JavaScript**: ImportMap (not Webpack)
 - **Forms**: SimpleForm with Bootstrap
-- **Charting**: Chartkick with Chart.js (area charts for financial projections)
+- **Charting**: Chartkick with Chart.js v4.4.1 (loaded via CDN, line charts with filled areas for financial projections)
 - **AI**: RubyLLM (~> 1.2.0) gem present but not yet integrated
 
 ### Data Models
@@ -58,11 +58,13 @@ devise_for :users  → All Devise routes
 - Events can retroactively adjust all future months from the event date forward
 
 ### Dashboard (pages#dashboard)
-- Interactive area chart showing total assets over time (Chartkick + Chart.js)
-- Three data series: "Savings per Month", "Total Invested Assets", and event markers (red dots)
-- Date range filtering with preset buttons (1, 2, 5, 10 years)
+- Interactive stacked line chart with filled areas showing total assets over time (Chartkick + Chart.js)
+- Three data series: "Savings per Month" (teal, fill to origin), "Total Invested Assets" (purple, fill to previous series), and "Life Event" markers (red dots, separate stack group)
+- Date range filtering with preset buttons (1, 3, 5, 10, 20, 30 years) and custom date modal
 - Event creation via Bootstrap modal with Turbo Stream form loading
 - Currency displayed in yen (¥)
+- Chart uses `line_chart` with `stacked: true` and `fill` options for proper stacking behavior
+- Life Events use `stack: "events"` to plot independently at the combined saved + other value
 
 ### Event System
 - Events represent life changes affecting finances (birth of child, marriage, promotion)
@@ -88,7 +90,7 @@ Active development - core functionality implemented:
 - Authentication working (Devise)
 - Models defined with validations and associations
 - Controllers fully implemented with financial projection logic
-- Chartkick integrated with stacked area chart visualization
+- Chartkick integrated with stacked line chart visualization (using line_chart with fill options, not area_chart)
 - Turbo Stream used for dynamic event form loading
 - 30-year financial projection generation working
 
