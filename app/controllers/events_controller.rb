@@ -39,15 +39,19 @@ class EventsController < ApplicationController
         end
         @months = current_user.months.where("date >= ? AND date < ?", event.month.date, event_end_date).order(:date)
 
-        total_assets = event.new_total_assets
-        saved_amount = event.new_saved_amount
+        total_assets = event.new_total_assets.to_f
+        saved_amount = event.new_saved_amount.to_f
+
         @months.each do |month|
+          interest_rate = month.interest_rate.to_f.nonzero? || 1.0  # prevent nil or zero
+
           month.update(
             total_assets: total_assets,
             saved_amount: saved_amount
           )
+
           total_assets += saved_amount
-          total_assets *= month.interest_rate
+          total_assets *= interest_rate
         end
       end
 
