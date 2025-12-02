@@ -12,7 +12,16 @@
   background: #fff;
   color: var(--aurora-navy);
   border-radius: 999px;
-  padding: 0.75rem 1.75rem;
+  padding: 0.75rem 0.75rem;
   font-weight: 500;
   border: 2px solid var(--aurora-navy);
+}
+
+.btn-aurora-shortlink {
+  background: #fff;
+  color: var(--aurora-navy);
+  border-radius: 999px;
+  padding: 0.75rem;
+  font-weight: 500;
+  border: 1px solid rgba(171, 169, 171, 0.75);
 }

@@ -1,12 +1,4 @@
-<div class="container-sm my-4 card-aurora">
-  <h2 class="text-center fw-bold fs-1 mb-4">
-    Your financial projections over the next
-    <% years, months = @months.count.divmod(12) %>
-    <% date_parts = [] %>
-    <% date_parts << pluralize(years, 'year') if years > 0 %>
-    <% date_parts << pluralize(months, 'month') if months > 0 %>
-    <%= date_parts.join(' and ') %>
-  </h2>
+<div class="container-sm mb-4 card-aurora">
   <div>
     <%= render 'pages/shortlinks' %>
   </div>

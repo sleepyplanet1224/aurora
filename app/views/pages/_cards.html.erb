@@ -1,7 +1,7 @@
 <div class="container my-3 text-center">
   <div class="row align-items-top">
     <div class="col-12 col-md-4">
-      <div class="card-aurora">
+      <div class="card-aurora d-flex flex-column justify-content-between align-items-center">
         <!-- 1. Main Variables -->
         <% total_last = (@months.last.total_assets + @months.last.saved_amount).to_f %>
         <% total_first = (@months.first.total_assets + @months.first.saved_amount).to_f %>
@@ -12,9 +12,9 @@
         <!-- 3. Assets -->
         <div class="mt-2">
           <div>
-            <span class="serif sign asset">¥</span>
-            <span class="serif asset mb-0 pb-0"><%= total_last.to_i %></span>
-            <p class="text-end subtle mt-0 me-3 pe-4 pt-0" >by <%= @months.last.date %></p>
+            <span class="sign asset">¥</span>
+            <span class="asset mb-0 pb-0"><%= number_with_delimiter(total_last.to_i) %></span>
+            <p class="text-end subtle my-0 me-3 pe-4 py-0" >by <%= @months.last.date.strftime('%b %Y') %></p>
           </div>
         </div>
         <!-- 4. Caret + up/down text -->
@@ -22,31 +22,48 @@
           <% if total_last > total_first %>
             <% increase = total_last / total_first * 100.0 %>
             <i class="fa-solid fa-caret-up me-2 mt-1 caret"></i>
-            <span>Up by <%= increase.round(2) %>% since <%= @months.first.date %></span>
+            <span>Up by <%= increase.round(2) %>% since <%= @months.first.date.strftime('%B %Y') %></span>
           <% else %>
             <% decrease = (1.0 - (total_last / total_first)) * 100.0 %>
             <i class="fa-solid fa-caret-down me-2 mb-1 caret"></i>
-            <span>Down by <%= decrease.round(2) %>% since <%= @months.first.date %></span>
+            <span>Down by <%= decrease.round(2) %>% since <%= @months.first.date.strftime('%B %Y') %></span>
           <% end %>
         </div>
       </div>
     </div>
     <div class="col-12 col-md-4">
-      <div class="card-aurora">
-        <h3 class="gradient-title">_ YEARS TO RETIREMENT</h3>
-        <h3>April 2038</h3>
+      <div class="card-aurora d-flex flex-column">
+        <h3 class="gradient-title align-items-start">LIFE EVENTS</h3>
+        <div class="mt-auto d-flex justify-content-center">
+          <div class="text-start">
+            <% @months.each do |month| %>
+              <% if month.events.any? %>
+                <% month.events.each do |event| %>
+                  <% event_icon = case event.name
+                  when "promotion" then "fa-briefcase"
+                  when "buying a car" then "fa-car-side"
+                  when "birth of a child" then "fa-baby"
+                  when "inheritance" then "fa-money-bill-transfer"
+                  when "marriage" then "fa-heart"
+                  when "buying a house" then "fa-house"
+                  else "fa-calendar"
+                  end %>
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="fa-solid dashboard-icon <%= event_icon %>" style="width: 24px;"></i>
+                    <span style="color: var(--aurora-navy); font-size: 1.25rem;">  <%= event[:name].capitalize %></span>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-4">
-      <div class="card-aurora">
-        <h3 class="gradient-title">LIFE EVENTS</h3>
-        <% @months.each do |month| %>
-          <% if month.events.any? %>
-            <% month.events.each do |event| %>
-              <p class="my-1" style="color: var(--aurora-body); font-size: 0.95rem;"><%= event[:name] %></p>
-            <% end %>
-          <% end %>
-        <% end %>
+      <div class="card-aurora d-flex flex-column justify-content-between align-items-center">
+        <h3 class="gradient-title mb-0">YOUR RETIREMENT</h3>
+        <h3 class="asset mb-0">April 2038</h3>
+        <p class="pb-0 mb-0" style="color: var(--aurora-navy); font-size: 1.0rem;">Only 12 years and 4 months to go! 🎉</p>
       </div>
     </div>
   </div>
