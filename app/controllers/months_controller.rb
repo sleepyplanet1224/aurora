@@ -32,7 +32,6 @@ class MonthsController < ApplicationController
       current_user.update(retirement_age: params[:retirement_age].to_i,
                           monthly_expenses: params[:monthly_expenses].to_i)
       retirement_date = current_user.birthday + params[:retirement_age].to_i.years
-      debugger
       month = current_user.months.find_by(date: retirement_date.beginning_of_month)
 
       Event.create(
