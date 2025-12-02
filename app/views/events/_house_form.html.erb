@@ -1,0 +1,25 @@
+<%= simple_form_for event, url: events_path, html: { class: "modal-form" } do |f| %>
+
+  <%= f.label :house_price, "House Price" %>
+  <%= f.input_field :house_price, name: "event[house_price]", class: "form-control", value: 0 %>
+
+  <%= f.label :down_payment, "Down Payment" %>
+  <%= f.input_field :down_payment, name: "event[down_payment]", class: "form-control", value: 0 %>
+
+  <%= f.label :mortgage_rate, "Mortgage Annual Rate (%)" %>
+  <%= f.input_field :mortgage_rate, name: "event[mortgage_rate]", class: "form-control", value: 5 %>
+
+  <%= f.label :mortgage_years, "Mortgage Length (years)" %>
+  <%= f.input_field :mortgage_years, name: "event[mortgage_years]", class: "form-control", value: 30 %>
+
+  <%= f.input :new_total_assets, as: :hidden, input_html: { value: month.total_assets } %>
+  <%= f.input :new_saved_amount, as: :hidden, input_html: { value: month.saved_amount } %>
+  <%= f.input :month_id, as: :hidden, input_html: { value: month.id } %>
+  <%= f.input :name, as: :hidden, input_html: { value: params[:search][:name] } %>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <%= f.button :submit, "Update Life Plan", class: "btn btn-primary" %>
+  </div>
+
+<% end %>

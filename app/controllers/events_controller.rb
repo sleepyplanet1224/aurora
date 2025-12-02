@@ -22,6 +22,25 @@ class EventsController < ApplicationController
         @event.new_total_assets = @event.new_total_assets.to_f + spouse_total_assets
         @event.new_saved_amount = @event.new_saved_amount.to_f + spouse_saved_amount
       end
+    when "buying a house"
+      house_price = params[:event][:house_price].to_f
+      down_payment = params[:event][:down_payment].to_f
+      mortgage_rate = params[:event][:mortgage_rate].to_f / 100.0 / 12.0  # monthly
+      mortgage_years = params[:event][:mortgage_years].to_i
+
+      principal = house_price - down_payment
+      months = mortgage_years * 12
+
+      if mortgage_rate > 0
+        monthly_payment = principal * (
+          mortgage_rate * (1 + mortgage_rate)**months
+        ) / ((1 + mortgage_rate)**months - 1)
+      else
+        monthly_payment = principal / months # zero interest mortgage
+      end
+
+      @event.new_total_assets = @event.new_total_assets.to_f - down_payment
+      @event.new_saved_amount = @event.new_saved_amount.to_f - monthly_payment
     end
 
     if @event.save

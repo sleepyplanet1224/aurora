@@ -4,6 +4,8 @@
     <%= render "events/promotion_form", event: @event, month: @month %>
   <% when "marriage" %>
     <%= render "events/marriage_form", event: @event, month: @month %>
+  <% when "buying a house" %>
+    <%= render "events/house_form", event: @event, month: @month %>
   <% else %>
     <%= render "events/form", event: @event, month: @month %>
   <% end %>
