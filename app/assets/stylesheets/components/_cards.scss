@@ -17,3 +17,44 @@
 .card-3d:hover {
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
 }
+
+.gradient-title {
+  font-weight: 700;
+  font-size: 2.25rem;
+  letter-spacing: 0.04em;
+
+  /* Gradient text */
+  background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.asset {
+  font-weight: 700;
+  font-size: 3.0rem;
+  color: #1a2643;
+}
+
+.sign {
+  background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.caret {
+  font-weight: 800;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtle {
+  font-weight: 300;
+  font-size: 0.7rem;
+  color: #4A5568;
+  margin-top: -0.76rem !important;
+}

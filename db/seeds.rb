@@ -30,7 +30,7 @@ puts "Created #{User.count} users."
 puts "Creating months..."
 
 start_month = Date.current.beginning_of_month
-end_month   = (start_month + 30.years).end_of_month
+end_month   = (start_month + 80.years).end_of_month
 
 current = start_month
 total_assets = 100_000

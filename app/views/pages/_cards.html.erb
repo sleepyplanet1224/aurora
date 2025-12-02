@@ -2,23 +2,44 @@
   <div class="row align-items-top">
     <div class="col-12 col-md-4">
       <div class="card-aurora">
-        <h3 class="fw-medium">Net Worth</h3>
-        <p style="color: var(--aurora-body); font-size: 0.95rem;">You are up 50% from X to Y.</p>
-        <p> a</p>
-        <p> b</p>
-        <p> c</p>
-        <p> d</p>
+        <!-- 1. Main Variables -->
+        <% total_last = (@months.last.total_assets + @months.last.saved_amount).to_f %>
+        <% total_first = (@months.first.total_assets + @months.first.saved_amount).to_f %>
+        <!-- 2. Title -->
+        <div>
+          <h3 class="gradient-title">NET WORTH</h3>
+        </div>
+        <!-- 3. Assets -->
+        <div class="mt-2">
+          <div>
+            <span class="serif sign asset">¥</span>
+            <span class="serif asset mb-0 pb-0"><%= total_last.to_i %></span>
+            <p class="text-end subtle mt-0 me-3 pe-4 pt-0" >by <%= @months.last.date %></p>
+          </div>
+        </div>
+        <!-- 4. Caret + up/down text -->
+        <div class="d-flex justify-content-center align-items-center mt-3">
+          <% if total_last > total_first %>
+            <% increase = total_last / total_first * 100.0 %>
+            <i class="fa-solid fa-caret-up me-2 mt-1 caret"></i>
+            <span>Up by <%= increase.round(2) %>% since <%= @months.first.date %></span>
+          <% else %>
+            <% decrease = (1.0 - (total_last / total_first)) * 100.0 %>
+            <i class="fa-solid fa-caret-down me-2 mb-1 caret"></i>
+            <span>Down by <%= decrease.round(2) %>% since <%= @months.first.date %></span>
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-4">
       <div class="card-aurora">
-        <h3 class="fw-medium">_ Years Until Retirement</h3>
+        <h3 class="gradient-title">_ YEARS TO RETIREMENT</h3>
         <h3>April 2038</h3>
       </div>
     </div>
     <div class="col-12 col-md-4">
       <div class="card-aurora">
-        <h3 class="fw-medium">Life Events</h3>
+        <h3 class="gradient-title">LIFE EVENTS</h3>
         <% @months.each do |month| %>
           <% if month.events.any? %>
             <% month.events.each do |event| %>
