@@ -6,6 +6,11 @@
   padding: 0.75rem 1.75rem;
   font-weight: 600;
   border: none;
+  transition: opacity 0.2s ease;
+  &:hover {
+    opacity: 0.75;
+    color: #fff;
+  }
 }
 
 .btn-aurora-secondary {
@@ -15,6 +20,12 @@
   padding: 0.75rem 0.75rem;
   font-weight: 500;
   border: 2px solid var(--aurora-navy);
+  &:hover {
+    border-color: transparent;
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      linear-gradient(135deg, var(--aurora-indigo), var(--aurora-teal)) border-box;
+  }
 }
 
 .btn-aurora-shortlink {
