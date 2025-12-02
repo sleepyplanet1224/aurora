@@ -1,8 +1,11 @@
 <div>
+  <%= render 'pages/form' %>
+</div>
+<div>
   <%= render 'pages/chart' %>
 </div>
 <div>
-  <%= render 'pages/form' %>
+  <%= render 'pages/cards' %>
 </div>
 <div>
   <%= render 'pages/summary' %>
@@ -73,7 +76,7 @@
                           input_html: { type: :month, name: "end_date", value: @end_date.strftime("%Y-%m") } %>
             </div>
             <div class="col-12 mt-4 text-center">
-              <%= f.submit 'See my projection', class: "btn btn-primary w-100" %>
+              <%= f.submit 'See my projection', class: "btn w-100 btn-aurora-primary" %>
             </div>
           </div>
         <% end %>
