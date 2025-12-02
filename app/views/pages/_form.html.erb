@@ -1,6 +1,13 @@
 <div class="container">
   <div class="d-flex justify-content-between align-items-center">
-    <h1 class="fw-bold my-5">Powerful Insights into Your Financial Future</h1>
-    <button type="button" class="me-4 btn btn-lg btn-aurora-primary mx-1 my-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Plan a Life Event</button>
+    <h1 class="dashboard-h1 my-5">
+      Financial Projections Over the Next
+      <% years, months = @months.count.divmod(12) %>
+      <% date_parts = [] %>
+      <% date_parts << pluralize(years, 'Year') if years > 0 %>
+      <% date_parts << pluralize(months, 'Month') if months > 0 %>
+      <%= date_parts.join(' and ') %>
+    </h1>
+    <button type="button" class="btn btn-lg btn-aurora-primary mx-1 my-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Plan a Life Event</button>
   </div>
 </div>

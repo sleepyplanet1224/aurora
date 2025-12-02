@@ -5,6 +5,14 @@
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
   padding: 24px 28px;
   height: 100%;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+  box-shadow:
+    0 0 12px rgba(53, 203, 165, 0.12),
+    0 0 24px rgba(95, 142, 255, 0.08),
+    0 0 36px rgba(162, 96, 255, 0.05);
+  }
 }
 
 .card-3d {
@@ -16,4 +24,53 @@
 
 .card-3d:hover {
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+}
+
+.gradient-title {
+  font-weight: 700;
+  font-size: 2.25rem;
+  // letter-spacing: 0.04em;
+
+  /* Gradient text */
+  background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.asset {
+  font-weight: 700;
+  font-size: 3.0rem;
+  color: #1a2643;
+}
+
+.sign {
+  background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.caret {
+  font-weight: 800;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtle {
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: #4A5568;
+  margin-top: -0.76rem !important;
+}
+
+.dashboard-icon {
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
