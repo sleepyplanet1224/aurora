@@ -24,6 +24,9 @@ class PagesController < ApplicationController
       @end_date = @start_date + 59.months # default
     end
 
+    # fyi this is so only the year is shown on the graph for > 10 years
+    @display_year_only = (@end_date - @start_date) > (10 * 365)
+
     # find months in the date range, order it
     @months = current_user.months
                           .includes(:events)
@@ -35,7 +38,7 @@ class PagesController < ApplicationController
     @chart_data_event  = {} # event marker (total line)
 
     @months.each do |month|
-      base_label  = month.date.strftime("%b %Y")
+      base_label  = @display_year_only ? month.date.strftime("%Y") : month.date.strftime("%b %Y")
       event_names = month.events.pluck(:name)
 
       # Label includes event names if present (for tooltip/x-axis)
