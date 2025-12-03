@@ -17,9 +17,10 @@
   background: #fff;
   color: var(--aurora-navy);
   border-radius: 999px;
-  padding: 0.75rem 0.75rem;
+  padding: 0.75rem;
   font-weight: 500;
   border: 2px solid var(--aurora-navy);
+  transition: opacity 0.2s ease;
   &:hover {
     border-color: transparent;
     background:
@@ -34,5 +35,18 @@
   border-radius: 999px;
   padding: 0.75rem;
   font-weight: 500;
-  border: 1px solid rgba(171, 169, 171, 0.75);
+  border: 3px solid rgba(171, 169, 171, 0.50);
+  transition: opacity 0.5s ease;
+  &:hover {
+    border:3px solid transparent;
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      linear-gradient(135deg, var(--aurora-indigo), var(--aurora-teal)) border-box;
+    span {
+        background: linear-gradient(135deg, var(--aurora-indigo), var(--aurora-teal));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+  }
 }
