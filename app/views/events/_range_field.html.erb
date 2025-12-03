@@ -1,0 +1,20 @@
+<%# Generic range input with live display %>
+<%# Locals: f:, attribute:, label:, min:, max:, step:, default: nil, suffix: nil %>
+<div data-controller="range">
+  <div class="d-flex justify-content-between mt-2">
+    <%= f.label attribute, label %>
+    <span><%= suffix if suffix == "¥" %><span class="mortgage-rate-display" data-range-target="display"><%= default %></span><%= suffix unless suffix == "¥" %></span>
+  </div>
+  <%= f.input_field attribute,
+                    name: "#{f.object_name}[#{attribute}]",
+                    class: "form-range aurora-range",
+                    value: default,
+                    type: "range",
+                    min: min,
+                    max: max,
+                    step: step,
+                    data: {
+                      range_target: "number",
+                      action: "input->range#update"
+                    } %>
+</div>
