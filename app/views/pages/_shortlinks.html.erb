@@ -1,45 +1,56 @@
-<div class="text-center mt-5 mb-3">
-  <%
-    # 1. Capture the current end date string for comparison
-    current_end_str = @end_date.strftime("%Y-%m")
+<div class="container">
+  <div class="card-aurora mb-4 d-flex flex-row justify-content-evenly align-items-center">
+    <div class="text-center me-5">
+      <%
+        # 1. Capture the current end date string for comparison
+        current_end_str = @end_date.strftime("%Y-%m")
 
-    # 2. Pre-calculate the target dates for each button
-    date_50y = (@start_date + 50.years - 1.month).strftime("%Y-%m")
-    date_30y = (@start_date + 30.years - 1.month).strftime("%Y-%m")
-    date_20y = (@start_date + 20.years - 1.month).strftime("%Y-%m")
-    date_10y = (@start_date + 10.years - 1.month).strftime("%Y-%m")
-    date_5y  = (@start_date + 5.years - 1.month).strftime("%Y-%m")
-    date_3y  = (@start_date + 3.years - 1.month).strftime("%Y-%m")
-    date_1y  = (@start_date + 1.year - 1.month).strftime("%Y-%m")
+        # 2. Pre-calculate the target dates for each button
+        date_50y = (@start_date + 50.years - 1.month).strftime("%Y-%m")
+        date_30y = (@start_date + 30.years - 1.month).strftime("%Y-%m")
+        date_20y = (@start_date + 20.years - 1.month).strftime("%Y-%m")
+        date_10y = (@start_date + 10.years - 1.month).strftime("%Y-%m")
+        date_5y  = (@start_date + 5.years - 1.month).strftime("%Y-%m")
+        date_3y  = (@start_date + 3.years - 1.month).strftime("%Y-%m")
+        date_1y  = (@start_date + 1.year - 1.month).strftime("%Y-%m")
 
-    # 3. Check if Custom is active (Active if NONE of the standard buttons match)
-    is_custom_active = ![date_50y, date_30y, date_20y, date_10y, date_5y, date_3y, date_1y].include?(current_end_str)
-  %>
-  <%= link_to "50 Years",
-      dashboard_path(end_date: date_50y, start_date: @start_date),
-      class: "btn mx-1 #{current_end_str == date_50y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" %>
-  <%= link_to "30 Years",
-      dashboard_path(end_date: date_30y, start_date: @start_date),
-      class: "btn mx-1 #{current_end_str == date_30y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" %>
-  <%= link_to "20 Years",
-      dashboard_path(end_date: date_20y, start_date: @start_date),
-      class: "btn mx-1 #{current_end_str == date_20y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" %>
-  <%= link_to "10 Years",
-      dashboard_path(end_date: date_10y, start_date: @start_date),
-      class: "btn mx-1 #{current_end_str == date_10y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" %>
-  <%= link_to "5 Years",
-      dashboard_path(end_date: date_5y, start_date: @start_date),
-      class: "btn mx-1 #{current_end_str == date_5y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" %>
-  <%= link_to "3 Years",
-      dashboard_path(end_date: date_3y, start_date: @start_date),
-      class: "btn mx-1 #{current_end_str == date_3y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" %>
-  <%= link_to "1 Year",
-      dashboard_path(end_date: date_1y, start_date: @start_date),
-      class: "btn mx-1 #{current_end_str == date_1y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" %>
-  <button type="button"
-          class="btn mx-1 <%= is_custom_active ? 'btn-aurora-primary' : 'btn-aurora-shortlink' %>"
-          data-bs-toggle="modal"
-          data-bs-target="#customDateModal">
-    Custom
-  </button>
+        # 3. Check if Custom is active (Active if NONE of the standard buttons match)
+        is_custom_active = ![date_50y, date_30y, date_20y, date_10y, date_5y, date_3y, date_1y].include?(current_end_str)
+      %>
+      <%= link_to dashboard_path(end_date: date_50y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_50y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" do %>
+        <span>50 Years</span>
+      <% end %>
+      <%= link_to dashboard_path(end_date: date_30y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_30y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" do %>
+        <span>30 Years</span>
+      <% end %>
+      <%= link_to dashboard_path(end_date: date_20y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_20y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" do %>
+        <span>20 Years</span>
+      <% end %>
+      <%= link_to dashboard_path(end_date: date_10y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_10y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" do %>
+        <span>10 Years</span>
+      <% end %>
+      <%= link_to dashboard_path(end_date: date_5y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_5y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" do %>
+        <span>5 Years</span>
+      <% end %>
+      <%= link_to dashboard_path(end_date: date_3y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_3y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" do %>
+        <span>3 Years</span>
+      <% end %>
+      <%= link_to dashboard_path(end_date: date_1y, start_date: @start_date),
+        class: "btn mx-1 #{current_end_str == date_1y ? 'btn-aurora-primary' : 'btn-aurora-shortlink'}" do %>
+        <span>1 Year</span>
+      <% end %>
+      <button type="button"
+              class="btn mx-1 <%= is_custom_active ? 'btn-aurora-primary' : 'btn-aurora-shortlink' %>"
+              data-bs-toggle="modal"
+              data-bs-target="#customDateModal">
+        <span>Custom</span>
+      </button>
+    </div>
+  </div>
 </div>

@@ -1,8 +1,5 @@
 <div class="container-sm mb-4 card-aurora">
   <div>
-    <%= render 'pages/shortlinks' %>
-  </div>
-  <div class="mt-5">
     <%= line_chart [
       {
         name: "Savings per Month",
@@ -47,6 +44,9 @@
       height: "360px",
       library: {
         scales: {
+        x: {
+          ticks: { maxTicksLimit: 20 }  # adjust this number
+        },
           y: {
             ticks: { maxTicksLimit: 10 }
           }
