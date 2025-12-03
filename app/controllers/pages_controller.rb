@@ -38,13 +38,7 @@ class PagesController < ApplicationController
       base_label  = month.date.strftime("%b %Y")
       event_names = month.events.pluck(:name)
 
-      # Label includes event names if present (for tooltip/x-axis)
-      label =
-        if event_names.any?
-          "#{base_label} – #{event_names.join(', ')}"
-        else
-          base_label
-        end
+      label = base_label
 
       saved = month.saved_amount.to_f
       other = month.total_assets.to_f
