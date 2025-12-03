@@ -13,7 +13,7 @@ Chartkick.options = {
         intersect: false,
         position: 'nearest',
         itemSort: function(a, b) {
-          var order = { 2: 0, 1: 1, 0: 2 };  // fyi, order is life event, total assets, savings
+          var order = { 2: 0, 1: 1, 0: 2 };
           return order[a.datasetIndex] - order[b.datasetIndex];
         },
         callbacks: {
@@ -28,6 +28,15 @@ Chartkick.options = {
               return null;
             }
             return label + ': ¥' + value.toLocaleString();
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: function(value) {
+            return value.toLocaleString();
           }
         }
       }
