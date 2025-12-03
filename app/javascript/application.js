@@ -7,11 +7,19 @@ import "chartkick"
 import "Chart.bundle"
 Chartkick.options = {
   library: {
-    scales: {
-      y: {
-        ticks: {
-          callback: function(value) {
-            return value.toLocaleString();
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            var label = context.dataset.label || '';
+            var value = context.parsed.y;
+            if (label === 'Life Event' && window.eventNamesMap) {
+              var eventName = window.eventNamesMap[context.label];
+              if (eventName) {
+                return eventName + ': ¥' + value.toLocaleString();
+              }
+            }
+            return label + ': ¥' + value.toLocaleString();
           }
         }
       }

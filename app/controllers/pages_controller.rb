@@ -36,18 +36,15 @@ class PagesController < ApplicationController
     @chart_data_saved  = {} # stacked part 1
     @chart_data_other  = {} # stacked part 2
     @chart_data_event  = {} # event marker (total line)
+    @event_names_map = {}
 
     @months.each do |month|
       base_label  = @display_year_only ? month.date.strftime("%Y") : month.date.strftime("%b %Y")
       event_names = month.events.pluck(:name)
+      @event_names_map[base_label] = event_names.join(', ') if event_names.any?
 
       # Label includes event names if present (for tooltip/x-axis)
-      label =
-        if event_names.any?
-          "#{base_label} – #{event_names.join(', ')}"
-        else
-          base_label
-        end
+      label = base_label
 
       saved = month.saved_amount.to_f
       other = month.total_assets.to_f
