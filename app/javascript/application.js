@@ -5,3 +5,41 @@ import "@popperjs/core"
 import "bootstrap"
 import "chartkick"
 import "Chart.bundle"
+Chartkick.options = {
+  library: {
+    plugins: {
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+        position: 'nearest',
+        itemSort: function(a, b) {
+          var order = { 2: 0, 1: 1, 0: 2 };
+          return order[a.datasetIndex] - order[b.datasetIndex];
+        },
+        callbacks: {
+          label: function(context) {
+            var label = context.dataset.label || '';
+            var value = context.parsed.y;
+            if (label === 'Life Event' && window.eventNamesMap) {
+              var eventName = window.eventNamesMap[context.label];
+              if (eventName) {
+                return 'Event: ' + eventName;
+              }
+              return null;
+            }
+            return label + ': ¥' + value.toLocaleString();
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: function(value) {
+            return value.toLocaleString();
+          }
+        }
+      }
+    }
+  }
+};
