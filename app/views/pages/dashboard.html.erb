@@ -1,83 +1,85 @@
-<div>
-  <%= render 'pages/form' %>
-</div>
-<div>
-  <%= render 'pages/shortlinks' %>
-</div>
-<div>
-  <%= render 'pages/cards' %>
-</div>
-<div>
-  <%= render 'pages/chart' %>
-</div>
-<div>
-  <%= render 'pages/summary' %>
-</div>
-<% event_icons = {
-  "promotion"        => "fa-solid fa-briefcase",
-  "marriage"         => "fa-solid fa-heart",
-  "buying a house"   => "fa-solid fa-house-chimney",
-  "birth of a child" => "fa-solid fa-baby",
-  "buying a car"     => "fa-solid fa-car-side",
-  "inheritance"      => "fa-solid fa-money-bill-transfer",
-} %>
-<!-- Plan a Life Event Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Plan a Life Event</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%= simple_form_for :search, url: new_event_path, method: :get, data: { turbo_stream: true, turbo_action: "replace" } do |f| %>
-          <div class="event-icon-picker">
-            <% event_icons.each do |label, icon| %>
-              <label class="event-icon-box">
-                <%= f.radio_button :name, label, class: "event-radio" %>
-                <i class="<%= icon %>"></i>
-                <span><%= label.humanize %></span>
-              </label>
-            <% end %>
+<div class="container" >
+  <div>
+    <%= render 'pages/form' %>
+  </div>
+  <div>
+    <%= render 'pages/shortlinks' %>
+  </div>
+  <div>
+    <%= render 'pages/cards' %>
+  </div>
+  <div>
+    <%= render 'pages/chart' %>
+  </div>
+  <div>
+    <%= render 'pages/summary' %>
+  </div>
+  <% event_icons = {
+    "promotion"        => "fa-solid fa-briefcase",
+    "marriage"         => "fa-solid fa-heart",
+    "buying a house"   => "fa-solid fa-house-chimney",
+    "birth of a child" => "fa-solid fa-baby",
+    "buying a car"     => "fa-solid fa-car-side",
+    "inheritance"      => "fa-solid fa-money-bill-transfer",
+  } %>
+  <!-- Plan a Life Event Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Plan a Life Event</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= simple_form_for :search, url: new_event_path, method: :get, data: { turbo_stream: true, turbo_action: "replace" } do |f| %>
+            <div class="event-icon-picker">
+              <% event_icons.each do |label, icon| %>
+                <label class="event-icon-box">
+                  <%= f.radio_button :name, label, class: "event-radio" %>
+                  <i class="<%= icon %>"></i>
+                  <span><%= label.humanize %></span>
+                </label>
+              <% end %>
+            </div>
+            <%= f.input :date, as: :string, html5: true, input_html: { type: :month, name: "month", onchange: "this.form.requestSubmit()" } %>
+          <% end %>
+          <div id="event-form">
           </div>
-          <%= f.input :date, as: :string, html5: true, input_html: { type: :month, name: "month", onchange: "this.form.requestSubmit()" } %>
-        <% end %>
-        <div id="event-form">
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Custom Date Modal on Top of Graph -->
-<div class="modal fade" id="customDateModal" tabindex="-1" aria-labelledby="customDateModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="customDateModalLabel">Select Your Financial Projection Range</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%= simple_form_for :search, url: dashboard_path, method: :get do |f| %>
-          <div class="row g-3 align-items-end justify-content-center">
-            <div class="col-6">
-              <%= f.input :start_date,
-                          label: "Start Date",
-                          as: :string,
-                          html5: true,
-                          input_html: { type: :month, name: "start_date", value: @start_date.strftime("%Y-%m") } %>
+  <!-- Custom Date Modal on Top of Graph -->
+  <div class="modal fade" id="customDateModal" tabindex="-1" aria-labelledby="customDateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="customDateModalLabel">Select Your Financial Projection Range</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= simple_form_for :search, url: dashboard_path, method: :get do |f| %>
+            <div class="row g-3 align-items-end justify-content-center">
+              <div class="col-6">
+                <%= f.input :start_date,
+                            label: "Start Date",
+                            as: :string,
+                            html5: true,
+                            input_html: { type: :month, name: "start_date", value: @start_date.strftime("%Y-%m") } %>
+              </div>
+              <div class="col-6">
+                <%= f.input :end_date,
+                            label: "End Date",
+                            as: :string,
+                            html5: true,
+                            input_html: { type: :month, name: "end_date", value: @end_date.strftime("%Y-%m") } %>
+              </div>
+              <div class="col-12 mt-4 text-center">
+                <%= f.submit 'See my projection', class: "btn w-100 btn-aurora-primary" %>
+              </div>
             </div>
-            <div class="col-6">
-              <%= f.input :end_date,
-                          label: "End Date",
-                          as: :string,
-                          html5: true,
-                          input_html: { type: :month, name: "end_date", value: @end_date.strftime("%Y-%m") } %>
-            </div>
-            <div class="col-12 mt-4 text-center">
-              <%= f.submit 'See my projection', class: "btn w-100 btn-aurora-primary" %>
-            </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
