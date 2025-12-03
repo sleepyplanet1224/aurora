@@ -25,7 +25,7 @@ class EventsController < ApplicationController
     when "buying a house"
       house_price = params[:event][:house_price].to_f
       down_payment = params[:event][:down_payment].to_f
-      mortgage_rate = params[:event][:mortgage_rate].to_f / 100.0 / 12.0  # monthly
+      mortgage_rate = params[:event][:mortgage_rate].to_f / 100.0 / 12.0 # monthly
       mortgage_years = params[:event][:mortgage_years].to_i
 
       principal = house_price - down_payment
@@ -33,8 +33,8 @@ class EventsController < ApplicationController
 
       if mortgage_rate > 0
         monthly_payment = principal * (
-          mortgage_rate * (1 + mortgage_rate)**months
-        ) / ((1 + mortgage_rate)**months - 1)
+          mortgage_rate * ((1 + mortgage_rate)**months)
+        ) / (((1 + mortgage_rate)**months) - 1)
       else
         monthly_payment = principal / months # zero interest mortgage
       end
@@ -43,37 +43,9 @@ class EventsController < ApplicationController
       @event.new_saved_amount = @event.new_saved_amount.to_f - monthly_payment
     end
 
-    if @event.save
-      events_to_update = current_user.events
-                                     .joins(:month)
-                                     .where("months.date >= ?", @event.month.date)
-                                     .order("months.date ASC")
+    success, @event = ApplyEvents.call(@event, current_user)
 
-      last_index = events_to_update.length - 1
-      events_to_update.each_with_index do |event, index|
-        if index < last_index
-          event_end_date = events_to_update[index + 1].month.date
-        else
-          event_end_date = current_user.months.last.date.next
-        end
-        @months = current_user.months.where("date >= ? AND date < ?", event.month.date, event_end_date).order(:date)
-
-        total_assets = event.new_total_assets.to_f
-        saved_amount = event.new_saved_amount.to_f
-
-        @months.each do |month|
-          interest_rate = month.interest_rate.to_f.nonzero? || 1.0  # prevent nil or zero
-
-          month.update(
-            total_assets: total_assets,
-            saved_amount: saved_amount
-          )
-
-          total_assets += saved_amount
-          total_assets *= interest_rate
-        end
-      end
-
+    if success
       redirect_to dashboard_path, notice: "Event created successfully."
     else
       redirect_to dashboard_path, alert: "Failed to create event."
