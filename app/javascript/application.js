@@ -5,3 +5,16 @@ import "@popperjs/core"
 import "bootstrap"
 import "chartkick"
 import "Chart.bundle"
+Chartkick.options = {
+  library: {
+    scales: {
+      y: {
+        ticks: {
+          callback: function(value) {
+            return value.toLocaleString();
+          }
+        }
+      }
+    }
+  }
+};
