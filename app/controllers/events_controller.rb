@@ -39,8 +39,9 @@ class EventsController < ApplicationController
         monthly_payment = principal / months # zero interest mortgage
       end
 
-      @event.new_total_assets = @event.new_total_assets.to_f - down_payment
-      @event.new_saved_amount = @event.new_saved_amount.to_f - monthly_payment
+      @event.new_total_assets = @event.new_total_assets.to_f + house_price - down_payment
+      # @event.new_monthly_payment = monthly_payment
+      # @event.mortgage_years = mortgage_years
     end
 
     if @event.save
@@ -61,15 +62,41 @@ class EventsController < ApplicationController
         total_assets = event.new_total_assets.to_f
         saved_amount = event.new_saved_amount.to_f
 
+        if event.name == "buying a house"
+          mortgage_years_param = params[:event][:mortgage_years].to_i
+          mortgage_months = mortgage_years_param * 12
+          mortgage_end_date = event.month.date >> mortgage_months
+
+          house_price_param = params[:event][:house_price].to_f
+          down_payment_param = params[:event][:down_payment].to_f
+          mortgage_rate_param = params[:event][:mortgage_rate].to_f / 100.0 / 12.0
+
+          principal_param = house_price_param - down_payment_param
+          if mortgage_rate_param > 0
+            monthly_payment = principal_param * (
+              mortgage_rate_param * (1 + mortgage_rate_param)**mortgage_months
+            ) / ((1 + mortgage_rate_param)**mortgage_months - 1)
+          else
+            monthly_payment = principal_param / mortgage_months
+          end
+        end
+
         @months.each do |month|
           interest_rate = month.interest_rate.to_f.nonzero? || 1.0  # prevent nil or zero
 
+          if event.name == "buying a house" && month.date < mortgage_end_date
+            saved_amount_for_month = saved_amount.to_f - monthly_payment
+            # saved_amount_for_month = 0 if saved_amount_for_month < 0  # prevent negative saving
+          else
+            saved_amount_for_month = saved_amount
+          end
+
           month.update(
             total_assets: total_assets,
-            saved_amount: saved_amount
+            saved_amount: saved_amount_for_month
           )
 
-          total_assets += saved_amount
+          total_assets += saved_amount_for_month
           total_assets *= interest_rate
         end
       end
