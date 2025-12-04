@@ -1,16 +1,11 @@
-<%= simple_form_for event, url: events_path, html: { class: "modal-form" } do |f| %>
-
-  <%= f.label :percentage, "Raise Percentage (%)" %>
-  <%= f.input_field :percentage, name: "event[percentage]", class: "form-control", value: 10, min: 0, max: 100 %>
-
-  <%= f.input :new_total_assets, as: :hidden, input_html: { value: month.total_assets } %>
-  <%= f.input :new_saved_amount, as: :hidden, input_html: { value: month.saved_amount } %>
-  <%= f.input :month_id, as: :hidden, input_html: { value: month.id } %>
-  <%= f.input :name, as: :hidden, input_html: { value: params[:search][:name] } %>
-
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    <%= f.button :submit, "Update Life Plan", class: "btn btn-primary" %>
-  </div>
-
-<% end %>
+<div class="px-2">
+  <%= simple_form_for event, url: events_path, html: { class: "modal-form" } do |f| %>
+    <label for="percentage" class="form-label">Raise Percentage (%)</label>
+    <input type="number" name="event[percentage]" id="percentage" class="form-control" placeholder="10" min="0" max="100">
+    <%= f.input :new_total_assets, as: :hidden, input_html: { value: month.total_assets } %>
+    <%= f.input :new_saved_amount, as: :hidden, input_html: { value: month.saved_amount } %>
+    <%= f.input :month_id, as: :hidden, input_html: { value: month.id } %>
+    <%= f.input :name, as: :hidden, input_html: { value: params[:search][:name] } %>
+    <%= f.button :submit, "Update Life Plan", class: "btn btn-aurora-primary w-100" %>
+  <% end %>
+</div>
