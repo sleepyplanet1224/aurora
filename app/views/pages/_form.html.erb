@@ -1,11 +1,6 @@
 <div class="d-flex justify-content-between align-items-center">
   <h1 class="dashboard-h1 my-5">
-    Financial Projections Over the Next
-    <% years, months = @months.count.divmod(12) %>
-    <% date_parts = [] %>
-    <% date_parts << pluralize(years, 'Year') if years > 0 %>
-    <% date_parts << pluralize(months, 'Month') if months > 0 %>
-    <%= date_parts.join(' and ') %>
+    Financial Projections
   </h1>
   <button type="button" class="btn btn-lg btn-aurora-primary mx-1 my-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Plan a Life Event</button>
 </div>
