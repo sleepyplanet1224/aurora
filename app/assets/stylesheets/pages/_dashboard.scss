@@ -9,3 +9,10 @@
   font-size: 2.9rem;
   color: #0f1a34
 }
+
+.event-form-gradient {
+  background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
