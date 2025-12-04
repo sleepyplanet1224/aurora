@@ -9,7 +9,7 @@ class MonthsController < ApplicationController
 
     if @month.save
       start_month = @month.date
-      end_month   = (start_month + 30.years).end_of_month
+      end_month   = (start_month + 80.years).end_of_month - 1.month
 
       current = start_month
       total_assets = @month.total_assets
@@ -64,8 +64,7 @@ class MonthsController < ApplicationController
     success, @event = ApplyEvents.call(@event, current_user)
 
     if success
-
-      redirect_to dashboard_path, notice: "Month and 30 years of months created!"
+      redirect_to dashboard_path, notice: "Your account is ready!"
     else
       render :new
     end

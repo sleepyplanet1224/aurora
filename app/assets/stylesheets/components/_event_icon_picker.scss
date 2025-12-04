@@ -5,17 +5,49 @@
 }
 
 .event-icon-box {
-  border: 2px solid #ccc;
+  position: relative;
+  background: var(--aurora-card);
   padding: 1rem;
-  width: 120px;
+  width: 140px;
   text-align: center;
   cursor: pointer;
-  border-radius: 10px;
-  transition: 0.2s;
+  border-radius: 12px;
+  border: 2px solid var(--aurora-border);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow:
+      0 8px 32px rgba(53, 203, 165, 0.2),
+      0 4px 16px rgba(95, 142, 255, 0.15),
+      0 2px 8px rgba(162, 96, 255, 0.1);
+  }
 }
 
-.event-icon-box:hover {
-  background: #a4c2ef !important
+.event-icon-box:has(.event-radio:checked) {
+  border: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+.event-icon-picker:has(.event-radio:checked) .event-icon-box:not(:has(.event-radio:checked)) {
+  opacity: 0.6;
 }
 
 .event-icon-box i {
@@ -29,15 +61,4 @@
 /* hide the actual radio input */
 .event-radio {
   display: none;
-}
-
-/* Selected state: highlight whole box */
-.event-radio:checked + i,
-.event-radio:checked + i + span {
-  color: #0d6efd;
-}
-
-.event-icon-box:has(.event-radio:checked) {
-  border-color: #0d6efd;
-  background: #e9f2ff;
 }
