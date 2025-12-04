@@ -35,13 +35,28 @@ class ApplyEvents
       @months.each do |month|
         interest_rate = month.interest_rate.to_f.nonzero? || 1.0 # prevent nil or zero
 
+        # At retirement we model spending as a negative "saved_amount".
+        applied_saved_amount = saved_amount
+
+        # Log the month-by-month projection around events for easier debugging.
+        previous_assets = total_assets
+
         month.update(
           total_assets: total_assets,
-          saved_amount: saved_amount
+          saved_amount: applied_saved_amount
         )
 
-        total_assets += saved_amount
+        total_assets += applied_saved_amount
         total_assets *= interest_rate
+
+        Rails.logger.info(
+          "[ApplyEvents] user_id=#{@current_user.id} " \
+          "event=#{event.name} month=#{month.date} " \
+          "prev_assets=#{previous_assets.round(2)} " \
+          "saved_amount=#{applied_saved_amount.round(2)} " \
+          "interest_rate=#{interest_rate} " \
+          "new_assets=#{total_assets.round(2)}"
+        ) if defined?(Rails) && Rails.env.development?
       end
 
       next unless index < last_index && events_to_update[index + 1].name == "retirement"

@@ -21,10 +21,6 @@
         <%= f.input :interest_rate, collection: Month::RATES.to_a, label_method: :first, value_method: :second, include_blank: false, selected: Month::RATES.to_a[-3].second %>
       </div>
       <!-- Retirement fields -->
-      <div class="mb-3">
-        <label for="retirement_age" class="form-label">Desired Retirement Age</label>
-        <input type="number" name="retirement_age" id="retirement_age" class="form-control" placeholder="60" min="0">
-      </div>
       <label for="monthly_expenses" class="form-label">Monthly Expenses for Retirement</label>
       <div class="input-group mb-3">
         <span class="input-group-text sign fw-bold fs-5">¥</span>

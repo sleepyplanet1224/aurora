@@ -7,4 +7,8 @@ class User < ApplicationRecord
   has_many :months, dependent: :destroy
   has_many :events, through: :months, dependent: :destroy
   # validates :birthday, presence: true
+
+  def age_at(date)
+    date.year - birthday.year
+  end
 end

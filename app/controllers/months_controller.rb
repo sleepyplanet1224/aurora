@@ -8,6 +8,7 @@ class MonthsController < ApplicationController
     @month.user = current_user
 
     if @month.save
+      # Build 80 years of baseline months
       start_month = @month.date
       end_month   = (start_month + 80.years).end_of_month - 1.month
 
@@ -29,39 +30,20 @@ class MonthsController < ApplicationController
         current = current.next_month
       end
 
-      current_user.update(retirement_age: params[:retirement_age].to_i,
-                          monthly_expenses: params[:monthly_expenses].to_i)
-
-      # ----------------- CHANGED PART -----------------
-      # Original code:
-      # month = current_user.months.find_by(date: retirement_date.beginning_of_month)
-      # This could return nil and cause NoMethodError
-
-      retirement_date = current_user.birthday + params[:retirement_age].to_i.years
-
-      # Use find_or_create_by to ensure month exists
-      current_user.months.find_or_create_by(date: retirement_date.beginning_of_month) do |m|
-        m.user = current_user              # Associate with current user
-        m.total_assets = total_assets      # Safe default total assets
-        m.saved_amount = 0                 # No savings in retirement month
-        m.interest_rate = interest_rate    # Use last known interest rate
-      end
-      # ----------------- END CHANGED PART -----------------
-
-      current_user.update(retirement_age: params[:retirement_age].to_i,
-                          monthly_expenses: params[:monthly_expenses].to_i)
-      retirement_date = current_user.birthday + params[:retirement_age].to_i.years
-      month = current_user.months.find_by(date: retirement_date.beginning_of_month)
-
-      @event = Event.create(
-        name: "retirement",
-        month: month,
-        new_total_assets: month.total_assets,
-        new_saved_amount: -current_user.monthly_expenses
+      # Save retirement preferences on the user (only monthly expenses now)
+      current_user.update(
+        monthly_expenses: params[:monthly_expenses].to_i
       )
+
+      # Create or update the user's retirement event based on their projections.
+      @event = RetirementPlanner.call(current_user)
     end
 
-    success, @event = ApplyEvents.call(@event, current_user)
+    if @event
+      success, @event = ApplyEvents.call(@event, current_user)
+    else
+      success = true
+    end
 
     if success
       redirect_to dashboard_path, notice: "Your account is ready!"

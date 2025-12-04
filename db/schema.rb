@@ -10,23 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_02_052559) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_04_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "events", force: :cascade do |t|
     t.bigint "month_id", null: false
     t.string "name"
-    t.integer "new_saved_amount"
-    t.integer "new_total_assets"
+    t.bigint "new_saved_amount"
+    t.bigint "new_total_assets"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["month_id"], name: "index_events_on_month_id"
   end
 
   create_table "months", force: :cascade do |t|
-    t.integer "total_assets"
-    t.integer "saved_amount"
+    t.bigint "total_assets"
+    t.bigint "saved_amount"
     t.date "date"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false

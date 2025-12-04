@@ -34,8 +34,13 @@
     <div class="col-12 col-md-4">
       <div class="card-aurora d-flex flex-column justify-content-between align-items-center">
         <h3 class="gradient-title mb-0">RETIREMENT</h3>
-        <h3 class="asset mb-0">April 2038</h3>
-        <p class="pb-0 mb-0" style="color: var(--aurora-navy); font-size: 1.0rem;">Only 12 years and 4 months to go! 🎉</p>
+        <% if @retirement_month %>
+          <h3 class="asset mb-0"><%= @retirement_month.date.strftime('%b %Y') %></h3>
+          <p class="pb-0 mb-0" style="color: var(--aurora-navy); font-size: 1.0rem;">You'll be <%= current_user.age_at(@retirement_month.date) %> years old. Only <%= (@retirement_month.date - Date.current).to_i / 365 %> years to go! 🎉</p>
+        <% else %>
+          <h3 class="asset mb-0">N/A</h3>
+          <p class="pb-0 mb-0" style="color: var(--aurora-navy); font-size: 1.0rem;">Retirement not reccomended yet.</p>
+        <% end %>
       </div>
     </div>
     <div class="col-12 col-md-4">
@@ -49,13 +54,14 @@
                 <% @months.each do |month| %>
                   <% month.events.each do |event| %>
                     <% next if event.name == "retirement" %>
-                    <% event_icon = case event.name
+                    <% event_icon = case event.name.downcase
                       when "promotion" then "fa-briefcase"
                       when "buying a car" then "fa-car-side"
                       when "birth of a child" then "fa-baby"
                       when "inheritance" then "fa-money-bill-transfer"
                       when "marriage" then "fa-heart"
                       when "buying a house" then "fa-house"
+                      when "mortgage paid" then "fa-house-chimney"
                       else "fa-calendar"
                     end %>
                     <i class="fa-solid dashboard-icon <%= event_icon %>"></i>

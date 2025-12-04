@@ -30,6 +30,7 @@ class EventsController < ApplicationController
 
       principal = house_price - down_payment
       months = mortgage_years * 12
+      mortgage_end_date = @event.month.date >> months
 
       if mortgage_rate > 0
         monthly_payment = principal * (
@@ -39,15 +40,29 @@ class EventsController < ApplicationController
         monthly_payment = principal / months # zero interest mortgage
       end
 
-      @event.new_total_assets = @event.new_total_assets.to_f + house_price - down_payment
+      # Treat the house as a consumption asset: do NOT add house_price into the
+      # investable assets used for retirement calculations. Only the down payment
+      # reduces investable assets here; the house value is tracked implicitly
+      # through cash flows (mortgage payments) rather than as part of total_assets.
+      @event.new_total_assets = @event.new_total_assets.to_f - down_payment
+
+      # Create a marker event for when the mortgage is fully paid so users
+      # can see that milestone on the timeline, without changing the projection.
+      payoff_month = current_user.months.find_by(date: mortgage_end_date)
+      if payoff_month
+        Event.find_or_create_by(name: "mortgage paid", month: payoff_month) do |e|
+          e.new_total_assets = payoff_month.total_assets
+          e.new_saved_amount = payoff_month.saved_amount
+        end
+      end
       # @event.new_monthly_payment = monthly_payment
       # @event.mortgage_years = mortgage_years
     end
 
-    success, @event = ApplyEvents.call(@event, current_user)
     return unless @event.save
 
     events_to_update = current_user.events
+                                   .where.not(name: ["retirement", "mortgage paid"])
                                    .joins(:month)
                                    .where("months.date >= ?", @event.month.date)
                                    .order("months.date ASC")
@@ -93,6 +108,8 @@ class EventsController < ApplicationController
           saved_amount_for_month = saved_amount
         end
 
+        previous_assets = total_assets
+
         month.update(
           total_assets: total_assets,
           saved_amount: saved_amount_for_month
@@ -100,14 +117,25 @@ class EventsController < ApplicationController
 
         total_assets += saved_amount_for_month
         total_assets *= interest_rate
+
+        if defined?(Rails) && Rails.env.development?
+          Rails.logger.info(
+            "[EventsController] user_id=#{current_user.id} " \
+            "event=#{event.name} month=#{month.date} " \
+            "prev_assets=#{previous_assets.round(2)} " \
+            "saved_amount=#{saved_amount_for_month.round(2)} " \
+            "interest_rate=#{interest_rate} " \
+            "new_assets=#{total_assets.round(2)}"
+          )
+        end
       end
     end
 
-    if success
-      redirect_to dashboard_path, notice: "Event created successfully."
-    else
-      redirect_to dashboard_path, alert: "Failed to create event."
-    end
+    # Recompute retirement event based on the updated projection.
+    retirement_event = RetirementPlanner.call(current_user)
+    ApplyEvents.call(retirement_event, current_user) if retirement_event
+
+    redirect_to dashboard_path, notice: "Event created successfully."
   end
 
   private
