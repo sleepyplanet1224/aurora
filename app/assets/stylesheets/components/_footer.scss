@@ -31,3 +31,30 @@
 .footer-copy {
   color: #6B7280;
 }
+
+.aurora-footer {
+  /* 1. Turns on flexible alignment */
+  display: flex;
+
+  /* 2. Pushes the first item (copyright) to the left and the last item (socials) to the right */
+  justify-content: space-between;
+
+  /* 3. Ensures items are vertically centered */
+  align-items: center;
+
+  /* Ensures the footer spans the full width and has padding */
+  width: 100%;
+  padding: 15px 20px;
+}
+
+/* Make sure any previous center alignment for the copyright text is removed */
+.footer-copy {
+  margin: 0;
+}
+
+.footer-social-section .elementor-icon i {
+  /* Increase the size of the icon font */
+  font-size: 20px;
+
+  /* You can adjust '24px' to any size you need (e.g., 20px, 30px) */
+}
