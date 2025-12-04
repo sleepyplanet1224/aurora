@@ -25,10 +25,13 @@
         <label for="retirement_age" class="form-label">Desired Retirement Age</label>
         <input type="number" name="retirement_age" id="retirement_age" class="form-control" placeholder="60" min="0">
       </div>
-      <label for="monthly_expenses" class="form-label">Desired Monthly Expenses for Retirement</label>
-      <input type="number" name="monthly_expenses" id="monthly_expenses" class="form-control" placeholder="150,000" min="0">
+      <label for="monthly_expenses" class="form-label">Monthly Expenses for Retirement</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text sign fw-bold fs-5">¥</span>
+        <input type="number" name="monthly_expenses" id="monthly_expenses" class="form-control" placeholder="150,000" min="0">
+      </div>
       <!-- Submit button -->
-      <%= f.button :submit, "Run Projection", class: "btn btn-aurora-primary w-100 mt-4" %>
+      <%= f.button :submit, "Run Projection", class: "btn btn-aurora-primary w-100 mt-2" %>
       <!-- Projected total -->
       <% if defined?(@total) && @total.present? %>
         <div class="alert alert-success mt-4 text-center">
