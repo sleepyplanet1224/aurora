@@ -32,16 +32,18 @@
         </div>
         <div class="modal-body">
           <%= simple_form_for :search, url: new_event_path, method: :get, data: { turbo_stream: true, turbo_action: "replace" } do |f| %>
-            <div class="event-icon-picker">
+            <div class="event-icon-picker justify-content-center w-100 align-items-stretch">
               <% event_icons.each do |label, icon| %>
-                <label class="event-icon-box">
+                <label class="event-icon-box d-flex flex-column justify-content-center align-items-center">
                   <%= f.radio_button :name, label, class: "event-radio" %>
-                  <i class="<%= icon %>"></i>
+                  <i class="<%= icon %> dashboard-icon"></i>
                   <span><%= label.humanize %></span>
                 </label>
               <% end %>
             </div>
-            <%= f.input :date, as: :string, html5: true, input_html: { type: :month, name: "month", onchange: "this.form.requestSubmit()" } %>
+            <div class="mt-4 px-2">
+              <%= f.input :date, as: :string, html5: true, input_html: { type: :month, name: "month", onchange: "this.form.requestSubmit()" } %>
+            </div>
           <% end %>
           <div id="event-form">
           </div>
