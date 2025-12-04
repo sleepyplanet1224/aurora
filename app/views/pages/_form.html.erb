@@ -2,5 +2,7 @@
   <h1 class="dashboard-h1 my-5">
     Financial Projections
   </h1>
-  <button type="button" class="btn btn-lg btn-aurora-primary mx-1 my-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Plan a Life Event</button>
+  <% if @months.any? { |month| month.events.any? { |e| e.name != "retirement" } } %>
+    <button type="button" class="btn btn-lg btn-aurora-primary mx-1 my-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Plan a Life Event</button>
+  <% end %>
 </div>
