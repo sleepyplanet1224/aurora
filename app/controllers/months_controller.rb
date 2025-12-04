@@ -30,40 +30,13 @@ class MonthsController < ApplicationController
         current = current.next_month
       end
 
-      # Save retirement preferences on the user
+      # Save retirement preferences on the user (only monthly expenses now)
       current_user.update(
-        retirement_age: params[:retirement_age].to_i,
         monthly_expenses: params[:monthly_expenses].to_i
       )
 
-      # Automatically determine the first possible retirement month:
-      # find the earliest month where monthly interest on total assets
-      # is greater than or equal to the desired retirement monthly expenses.
-      monthly_expenses = current_user.monthly_expenses.to_f
-      retirement_month = nil
-
-      current_user.months.order(:date).each do |month|
-        rate = month.interest_rate.to_f
-        # Interest is the growth part only (e.g. 1.004868 -> 0.004868)
-        monthly_interest = month.total_assets.to_f * (rate - 1.0)
-
-        if monthly_interest >= monthly_expenses
-          retirement_month = month
-          break
-        end
-      end
-
-      # Only create a retirement event if it's actually possible within the horizon.
-      if retirement_month
-        @event = Event.new(
-          name: "retirement",
-          month: retirement_month,
-          new_total_assets: retirement_month.total_assets,
-          new_saved_amount: -current_user.monthly_expenses
-        )
-      else
-        @event = nil
-      end
+      # Create or update the user's retirement event based on their projections.
+      @event = RetirementPlanner.call(current_user)
     end
 
     if @event

@@ -57,6 +57,9 @@ class PagesController < ApplicationController
       @chart_data_event[label] = total if event_names.any?
     end
 
+    @retirement_event = current_user.events.find_by(name: "retirement")
+    @retirement_month = @retirement_event.month if @retirement_event
+
     if ENV["ENABLE_SUMMARY"] == "true"
       @summary = RubyLLM.chat.ask(" Please analyze the following monthly savings data.
             I would like you to:
