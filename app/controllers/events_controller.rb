@@ -25,7 +25,7 @@ class EventsController < ApplicationController
     when "buying a house"
       house_price = params[:event][:house_price].to_f
       down_payment = params[:event][:down_payment].to_f
-      mortgage_rate = params[:event][:mortgage_rate].to_f / 100.0 / 12.0  # monthly
+      mortgage_rate = params[:event][:mortgage_rate].to_f / 100.0 / 12.0 # monthly
       mortgage_years = params[:event][:mortgage_years].to_i
 
       principal = house_price - down_payment
@@ -33,8 +33,8 @@ class EventsController < ApplicationController
 
       if mortgage_rate > 0
         monthly_payment = principal * (
-          mortgage_rate * (1 + mortgage_rate)**months
-        ) / ((1 + mortgage_rate)**months - 1)
+          mortgage_rate * ((1 + mortgage_rate)**months)
+        ) / (((1 + mortgage_rate)**months) - 1)
       else
         monthly_payment = principal / months # zero interest mortgage
       end
@@ -44,6 +44,7 @@ class EventsController < ApplicationController
       # @event.mortgage_years = mortgage_years
     end
 
+    success, @event = ApplyEvents.call(@event, current_user)
     if @event.save
       events_to_update = current_user.events
                                      .joins(:month)
@@ -101,6 +102,7 @@ class EventsController < ApplicationController
         end
       end
 
+    if success
       redirect_to dashboard_path, notice: "Event created successfully."
     else
       redirect_to dashboard_path, alert: "Failed to create event."
