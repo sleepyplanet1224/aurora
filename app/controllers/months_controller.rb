@@ -55,17 +55,18 @@ class MonthsController < ApplicationController
         new_saved_amount: -current_user.monthly_expenses
       )
 
-    current_user.update(retirement_age: params[:retirement_age].to_i,
-                        monthly_expenses: params[:monthly_expenses].to_i)
-    retirement_date = current_user.birthday + params[:retirement_age].to_i.years
-    month = current_user.months.find_by(date: retirement_date.beginning_of_month)
+      current_user.update(retirement_age: params[:retirement_age].to_i,
+                          monthly_expenses: params[:monthly_expenses].to_i)
+      retirement_date = current_user.birthday + params[:retirement_age].to_i.years
+      month = current_user.months.find_by(date: retirement_date.beginning_of_month)
 
-    @event = Event.create(
-      name: "retirement",
-      month: month,
-      new_total_assets: month.total_assets,
-      new_saved_amount: -current_user.monthly_expenses
-    )
+      @event = Event.create(
+        name: "retirement",
+        month: month,
+        new_total_assets: month.total_assets,
+        new_saved_amount: -current_user.monthly_expenses
+      )
+    end
 
     success, @event = ApplyEvents.call(@event, current_user)
 
