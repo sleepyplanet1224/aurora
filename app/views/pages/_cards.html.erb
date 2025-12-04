@@ -39,9 +39,10 @@
       </div>
     </div>
     <div class="col-12 col-md-4">
-      <div class="card-aurora d-flex flex-column" style="height: 231.85px;">
+      <% has_events = @months.any? { |month| month.events.any? { |e| e.name != "retirement" } } %>
+      <div class="<%= has_events ? 'card-aurora' : 'card-aurora-gradient' %> d-flex flex-column" style="height: 231.85px;">
         <h3 class="gradient-title align-items-start">LIFE EVENTS</h3>
-        <% if @months.any? { |month| month.events.any? { |e| e.name != "retirement" } } %>
+        <% if has_events %>
           <% @months.each do |month| %>
             <div class="d-flex flex-column w-100 mt-2" style="overflow: hidden;">
               <div class="scrollable w-100 d-flex justify-content-center">
@@ -66,7 +67,10 @@
             </div>
           <% end %>
         <% else %>
-          <button type="button" class="btn btn-lg btn-aurora-primary mx-1 my-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Plan a Life Event</button>
+          <div class="mt-auto text-center">
+            <i class="fa-solid fa-circle-plus dashboard-icon mt-2" style="font-size: 5rem;" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+            <p class="mt-3">Click the + button to add a life event.</p>
+          </div>
         <% end %>
       </div>
     </div>

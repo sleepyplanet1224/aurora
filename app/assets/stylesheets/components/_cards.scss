@@ -19,6 +19,57 @@
   }
 }
 
+.card-aurora-gradient {
+  position: relative;
+  background: var(--aurora-card);
+  border-radius: 24px;
+  padding: 24px 28px;
+  height: 100%;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  border: none;
+  cursor: pointer;
+
+  // Gradient border using pseudo-element
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 3px;
+    background: linear-gradient(90deg, #35cba5, #5f8eff, #a260ff);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow:
+      0 8px 32px rgba(53, 203, 165, 0.2),
+      0 4px 16px rgba(95, 142, 255, 0.15),
+      0 2px 8px rgba(162, 96, 255, 0.1);
+
+    .dashboard-icon {
+      opacity: 0.7;
+    }
+
+    &::before {
+      opacity: 0.7;
+    }
+
+    .scrollable::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #35cba5, #5f8eff);
+    }
+  }
+}
+
 .card-3d {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   transform-style: preserve-3d;
