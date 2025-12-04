@@ -8,10 +8,14 @@
   transition: box-shadow 0.3s ease;
 
   &:hover {
-  box-shadow:
-    0 0 12px rgba(53, 203, 165, 0.12),
-    0 0 24px rgba(95, 142, 255, 0.08),
-    0 0 36px rgba(162, 96, 255, 0.05);
+    box-shadow:
+      0 0 12px rgba(53, 203, 165, 0.12),
+      0 0 24px rgba(95, 142, 255, 0.08),
+      0 0 36px rgba(162, 96, 255, 0.05);
+
+    .scrollable::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #35cba5, #5f8eff);
+    }
   }
 }
 
@@ -27,7 +31,7 @@
 }
 
 .gradient-title {
-  font-weight: 700;
+  font-weight: 800;
   font-size: 2.25rem;
   // letter-spacing: 0.04em;
 
@@ -73,4 +77,19 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.scrollable {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 3px;
+  }
 }

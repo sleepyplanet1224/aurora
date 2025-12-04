@@ -1,8 +1,5 @@
-<div class="container-sm mb-4 card-aurora">
-  <div>
-    <%= render 'pages/shortlinks' %>
-  </div>
-  <div class="mt-5">
+<div class="my-4 card-aurora">
+  <div class="my-3" >
     <%= line_chart [
       {
         name: "Savings per Month",
@@ -40,18 +37,31 @@
         }
       }
     ],
-      title: "Total Assets (¥)",
       legend: "bottom",
       stacked: true,
       colors: ["#2BB6A9", "#7A5CFF", "#FF5C5C"],
-      height: "360px",
+      height: "480px",
       library: {
+        plugins: {
+          title: {
+            display: true,
+            text: "Total Assets (¥)",
+            font: { size: 32, weight: "bold" },
+            padding: { bottom: 16 }
+          }
+        },
         scales: {
+          x: {
+            ticks: { maxTicksLimit: 20 }
+          },
           y: {
             ticks: { maxTicksLimit: 10 }
           }
         }
       }
     %>
+    <script>
+      window.eventNamesMap = <%= raw @event_names_map.to_json %>;
+    </script>
   </div>
 </div>
